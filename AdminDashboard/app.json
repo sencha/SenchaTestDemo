@@ -1,0 +1,157 @@
+{
+    "name": "Admin",
+    "version": "1.0.0.0",
+    "indexHtmlPath": "index.html",
+    "classpath": [
+        "app",
+        "${toolkit.name}/src"
+    ],
+    "overrides": [
+        "overrides",
+        "${toolkit.name}/overrides"
+    ],
+    "framework": "ext",
+    "requires": [
+        "charts",
+        "font-awesome",
+        "ux"
+    ],
+    "sass": {
+        "namespace": "Admin",
+        "etc": [
+            "sass/etc/all.scss",
+            "${toolkit.name}/sass/etc/all.scss"
+        ],
+        "var": [
+            "sass/var/all.scss",
+            "sass/var",
+            "${toolkit.name}/sass/var/all.scss",
+            "${toolkit.name}/sass/var"
+        ],
+        "src": [
+            "sass/src",
+            "${toolkit.name}/sass/src"
+        ]
+    },
+    "js": [
+        {
+            "path": "app.js",
+            "bundle": true
+        }
+    ],
+    "classic": {
+        "js": []
+    },
+    "modern": {
+        "js": []
+    },
+    "css": [
+        {
+            "path": "${build.out.css.path}",
+            "bundle": true,
+            "exclude": [
+                "fashion"
+            ]
+        }
+    ],
+    "loader": {
+        "cache": false,
+        "cacheParam": "_dc"
+    },
+    "production": {
+        "output": {
+            "appCache": {
+                "enable": false,
+                "path": "../cache.appcache"
+            }
+        },
+        "loader": {
+            "cache": "${build.timestamp}"
+        },
+        "cache": {
+            "enable": false
+        }
+    },
+    "testing": {
+        "output": {
+            "appCache": {
+                "enable": false
+            }
+        },
+        "cache": {
+            "enable": false
+        }
+    },
+    "development": {
+        "tags": [],
+        "tests": {
+            "path": "test/project.json"
+        }
+    },
+    "bootstrap": {
+        "base": "${app.dir}",
+        "manifest": "${build.id}.json",
+        "microloader": "bootstrap.js",
+        "css": "bootstrap.css"
+    },
+    "output": {
+        "base": "${ext.dir}/build/examples/admin-dashboard/${build.id}",
+        "page": "../index.html",
+        "manifest": "../${build.id}.json",
+        "appCache": {
+            "enable": false
+        }
+    },
+    "cache": {
+        "enable": false,
+        "deltas": false
+    },
+    "appCache": {
+        "cache": [
+            "index.html"
+        ],
+        "network": [
+            "*"
+        ],
+        "fallback": []
+    },
+    "resources": [
+        {
+            "path": "resources"
+        },
+        {
+            "path": "${toolkit.name}/resources"
+        }
+    ],
+    "ignore": [
+        "(^|/)CVS(/?$|/.*?$)"
+    ],
+    "archivePath": "archive",
+    "slicer": {
+        "js": [
+            {
+                "path": "sass/example/custom.js",
+                "isWidgetManifest": true
+            }
+        ],
+        "output": {
+            "appCache": {
+                "enable": false
+            }
+        },
+        "cache": {
+            "enable": false
+        }
+    },
+    "builds": {
+        "classic": {
+            "toolkit": "classic",
+            "theme": "theme-triton"
+        },
+        "modern": {
+            "toolkit": "modern",
+            "theme": "theme-triton"
+        }
+    },
+    "id": "39acbe74-575a-4e77-8062-a62324a1e58f"
+}
