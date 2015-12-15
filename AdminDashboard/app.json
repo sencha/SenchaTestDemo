@@ -95,7 +95,7 @@
         "css": "bootstrap.css"
     },
     "output": {
-        "base": "${ext.dir}/build/examples/admin-dashboard/${build.id}",
+        "base": "${workspace.build.dir}/${build.environment}/${app.name}/${build.id}",
         "page": "../index.html",
         "manifest": "../${build.id}.json",
         "appCache": {
