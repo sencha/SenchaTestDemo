@@ -7,3 +7,11 @@ setup.
 
 Once the "ext" folder is placed in the folder, that folder cna be opened in Sencha Studio
 by selecting "Open Workspace".
+
+## AdminDashboard
+This is a single-application project using the Ext JS 6.0.1 application template and
+decorated with a few starter tests. More to come here as Sencha Test approaches GA.
+
+## Workspace
+This is a workspace with two applications: the admin dashboard again and the stock
+Sencha Cmd "starter" application.
