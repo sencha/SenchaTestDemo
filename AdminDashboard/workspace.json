@@ -14,7 +14,7 @@
         "browser": {
             "farms": []
         },
-        "archiveRoot": "/senchatest/demo",
+        "archiveRoot": "/senchatest/demo/1.0.0",
         "archiveServer": "http://cdn.sencha.com"
     }
 }
