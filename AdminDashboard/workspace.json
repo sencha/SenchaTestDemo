@@ -1,7 +1,5 @@
 {
-    "frameworks": {
-        "ext": "ext"
-    },
+    "name": "AdminDashboard",
     "build": {
         "dir": "${workspace.dir}/build"
     },
@@ -9,7 +7,6 @@
         "dir": "${workspace.dir}/packages/local,${workspace.dir}/packages",
         "extract": "${workspace.dir}/packages/remote"
     },
-    "name": "AdminDashboard",
     "tests": {
         "browser": {
             "farms": []
