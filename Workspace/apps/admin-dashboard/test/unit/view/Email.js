@@ -33,9 +33,9 @@ describe("Email.js", function() {
         });
         
         it('should close', function () {
-            var win = Orion.component(compose);
+            var win = ST.component(compose);
             
-            Orion.textField(compose.lookup('subjectField')).
+            ST.textField(compose.lookup('subjectField')).
                 focus().
                 type('Hello').
                 and(function (field) {
@@ -43,7 +43,7 @@ describe("Email.js", function() {
                 }).
                 wait(1000);
             
-            Orion.button(compose.lookup('discardButton')).
+            ST.button(compose.lookup('discardButton')).
                 click(10, 10);
 
             win.
