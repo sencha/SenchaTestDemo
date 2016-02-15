@@ -13,8 +13,8 @@
         {
             "libs": [],
             "coverageFilters": [],
-            "directory": "https",
-            "name": "HTTPS Tests",
+            "directory": "google",
+            "name": "Google Tests",
             "page": "https://www.google.com"
         }
     ]
