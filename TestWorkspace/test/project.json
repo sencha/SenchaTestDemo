@@ -1,0 +1,21 @@
+{
+    "framework": "jasmine",
+    "libs": [],
+    "coverageFilters": [],
+    "scenarios": [
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "examples",
+            "page": "http://examples.sencha.com/extjs/6.0.1/examples/admin-dashboard/",
+            "name": "Examples Tests"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "https",
+            "name": "HTTPS Tests",
+            "page": "https://www.google.com"
+        }
+    ]
+}
