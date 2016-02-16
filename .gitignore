@@ -17,3 +17,8 @@ Touch2App/bootstrap*
 Touch2App/touch
 Touch2App/build
 
+**/.sass-cache
+Ext5App/sass/example/bootstrap.*
+Ext4App/sass/example/bootstrap.*
+Touch2App/sass/example/bootstrap.*
+Ext4App/sass/example/example.css
