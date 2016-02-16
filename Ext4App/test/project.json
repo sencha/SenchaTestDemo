@@ -1,0 +1,15 @@
+{
+    "framework": "jasmine",
+    "libs": [],
+    "coverageFilters": [],
+    "scenarios": [
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "launch": true,
+            "directory": "functional",
+            "name": "Functional Tests"
+        }
+    ],
+    "globals": "Ext4App"
+}

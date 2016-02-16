@@ -1,0 +1,10 @@
+{
+    "name": "Ext4App",
+    "requires": [],
+    "id": "ca425f8b-dabe-4314-97f5-43c18030f050",
+    "development": {
+        "tests": {
+            "path": "test/project.json"
+        }
+    }
+}
