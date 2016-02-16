@@ -6,13 +6,6 @@
         {
             "libs": [],
             "coverageFilters": [],
-            "directory": "unit",
-            "name": "Unit Tests",
-            "globals": ""
-        },
-        {
-            "libs": [],
-            "coverageFilters": [],
             "launch": true,
             "directory": "functional",
             "name": "Functional Tests"
