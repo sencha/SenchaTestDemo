@@ -37,6 +37,7 @@ Ext.define('Admin.view.email.Compose', {
         },
         {
             xtype: 'textfield',
+            reference: 'subjectField',
             fieldLabel: 'Subject'
         },
         {

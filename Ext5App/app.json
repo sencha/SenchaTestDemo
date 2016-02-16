@@ -1,0 +1,66 @@
+{
+    "name": "Ext5App",
+    "indexHtmlPath": "index.html",
+    "classpath": "${app.dir}/app",
+    "overrides": "${app.dir}/overrides",
+    "framework": "ext",
+    "theme": "ext-theme-neptune",
+    "requires": [],
+    "sass": {
+        "namespace": "Ext5App"
+    },
+    "js": [
+        {
+            "path": "${framework.dir}/build/ext-all-rtl-debug.js"
+        },
+        {
+            "path": "app.js",
+            "bundle": true
+        }
+    ],
+    "css": [
+        {
+            "path": "bootstrap.css",
+            "bootstrap": true
+        }
+    ],
+    "production": {},
+    "testing": {},
+    "development": {
+        "tests": {
+            "path": "test/project.json"
+        }
+    },
+    "bootstrap": {
+        "base": "${app.dir}",
+        "manifest": "bootstrap.json",
+        "microloader": "bootstrap.js",
+        "css": "bootstrap.css"
+    },
+    "output": {
+        "base": "${workspace.build.dir}/${build.environment}/${app.name}"
+    },
+    "appCache": {
+        "cache": [
+            "index.html"
+        ],
+        "network": [
+            "*"
+        ],
+        "fallback": []
+    },
+    "resources": [],
+    "ignore": [
+        "(^|/)CVS(/?$|/.*?$)"
+    ],
+    "archivePath": "archive",
+    "slicer": {
+        "js": [
+            {
+                "path": "${app.dir}/sass/example/custom.js",
+                "isWidgetManifest": true
+            }
+        ]
+    },
+    "id": "3740ad5d-e0a3-4385-b838-d5d937f7f007"
+}

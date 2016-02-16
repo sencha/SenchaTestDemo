@@ -5,3 +5,20 @@ Workspace/build
 AdminDashboard/ext
 AdminDashboard/build
 
+Ext5App/bootstrap*
+Ext5App/ext
+Ext5App/build
+
+Ext4App/bootstrap*
+Ext4App/ext
+Ext4App/build
+
+Touch2App/bootstrap*
+Touch2App/touch
+Touch2App/build
+
+**/.sass-cache
+Ext5App/sass/example/bootstrap.*
+Ext4App/sass/example/bootstrap.*
+Touch2App/sass/example/bootstrap.*
+Ext4App/sass/example/example.css

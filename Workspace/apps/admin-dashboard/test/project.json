@@ -7,14 +7,17 @@
             "libs": [],
             "coverageFilters": [],
             "directory": "unit",
-            "name": "Unit Tests"
+            "name": "Unit Tests",
+            "profile": "classic"
         },
         {
             "libs": [],
             "coverageFilters": [],
             "directory": "email",
             "name": "Email",
-            "page": "#email"
+            "page": "#email",
+            "launch": true,
+            "profile": "classic"
         }
     ]
 }

@@ -1,0 +1,106 @@
+{
+    /**
+     * The relative path to the appliaction's markup file (html, jsp, asp, etc.)
+     */
+    "indexHtmlPath": "index.html",
+
+    /**
+     * Additional resources used during theme slicing operations
+     */
+    "slicer": {
+        "js": [
+            {
+                "path": "${app.dir}/sass/example/custom.js",
+                "isWidgetManifest": true
+            }
+        ]
+    },
+
+    /**
+     * override objects for setting build environment specific
+     * settings.
+     */
+    "production": {
+    },
+
+    "testing": {
+        "output": {
+            "deltas": {
+                "enable": false
+            },
+            "cache": {
+                "enable": false
+            }
+        }
+    },
+
+    "development": {
+    },
+
+    /**
+     *  Controls the output directory for build resources.  May be set with
+     *  either a string:
+     *
+     *      output: ""
+     *
+     *  or an object containing values for various types of
+     *  build artifacts:
+     *
+     *      "output": {
+     *          "base": "${workspace.build.dir}/${build.environment}/${app.name}",
+     *          "page": {
+     *              "path": "../index.html",
+     *              "enable": false
+     *          },
+     *          "css": "${app.output.resources}/${app.name}-all.css",
+     *          "js": {
+     *              "path": "app.js",
+     *              "enable": true,
+     *              "optimize": {
+     *                  "defines": true,
+     *                  "callParent": true,
+     *                  "requires": true,
+     *               }
+     *          },
+     *          "microloader": {
+     *              "path": "microloader.js",
+     *              "embed": true,
+     *              "enable": true
+     *          },
+     *          "manifest": {
+     *              "path": "app.json",
+     *              "embed": false,
+     *              "enable": "${app.output.microloader.enable}"
+     *          },
+     *          "resources": "resources",
+     *          "slicer": {
+     *              "path": "${app.output.resources}/images",
+     *              "enable": false
+     *          }
+     *      }
+     *
+     */
+    "output": {
+        "base": "${workspace.build.dir}/${build.environment}/${app.name}"
+    },
+
+    /**
+     *  Controls the output structure of bootstrap artifacts.  May be specified by a string:
+     *
+     *  "bootstrap": "${app.dir}"
+     *
+     *  to adjust the base path for all bootstrap objects, or expanded into object form:
+     *
+     *  "bootstrap": {
+     *      "base": "${app.dir},
+     *      "manifest": "bootstrap.json",
+     *      "microloader": "bootstrap.js",
+     *      "css": "bootstrap.css"
+     *  }
+     *
+     *
+     */
+    "bootstrap":{
+        "base": "${app.dir}"
+    }
+}
