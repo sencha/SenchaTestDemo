@@ -8,14 +8,16 @@
             "coverageFilters": [],
             "directory": "examples",
             "page": "http://examples.sencha.com/extjs/6.0.1/examples/admin-dashboard/",
-            "name": "Examples Tests"
+            "name": "Examples Tests",
+            "globals": "Admin"
         },
         {
             "libs": [],
             "coverageFilters": [],
             "directory": "google",
             "name": "Google Tests",
-            "page": "https://www.google.com"
+            "page": "https://www.google.com",
+            "globals": "*"
         }
     ]
 }

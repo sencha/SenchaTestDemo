@@ -19,5 +19,6 @@
             "launch": true,
             "profile": "classic"
         }
-    ]
+    ],
+    "globals": "Admin"
 }
