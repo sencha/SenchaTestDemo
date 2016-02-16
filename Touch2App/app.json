@@ -1,0 +1,56 @@
+{
+    "name": "Touch2App",
+    "indexHtmlPath": "index.html",
+    "framework": "touch",
+    "url": null,
+    "js": [
+        {
+            "path": "touch/sencha-touch.js",
+            "x-bootstrap": true
+        },
+        {
+            "path": "bootstrap.js",
+            "x-bootstrap": true
+        },
+        {
+            "path": "app.js",
+            "bundle": true,
+            "update": "delta"
+        }
+    ],
+    "css": [
+        {
+            "path": "resources/css/app.css",
+            "update": "delta"
+        }
+    ],
+    "appCache": {
+        "cache": [
+            "index.html"
+        ],
+        "network": [
+            "*"
+        ],
+        "fallback": []
+    },
+    "resources": [
+        "resources/images",
+        "resources/icons",
+        "resources/startup"
+    ],
+    "ignore": [
+        ".svn$"
+    ],
+    "archivePath": "archive",
+    "requires": [],
+    "cache": {
+        "enable": true,
+        "deltas": "deltas"
+    },
+    "id": "2f66d7e2-3f35-4ee4-bd0b-8276daff64eb",
+    "development": {
+        "tests": {
+            "path": "test/project.json"
+        }
+    }
+}
