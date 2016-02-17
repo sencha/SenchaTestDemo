@@ -1,6 +1,6 @@
 # Sencha Test - Workspace Demo Walkthrough
 
-The test runs for the Workspace sub-project illustrates several common workflows when running
+The test runs for the Workspace sub-project illustrate several common situations when running
 tests using Sencha Test.
 
 ## Test Run #1
