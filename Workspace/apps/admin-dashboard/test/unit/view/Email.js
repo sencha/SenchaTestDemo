@@ -2,6 +2,9 @@ describe("Email.js", function() {
     describe('Compose', function () {
         var compose;
         
+        // We need to create the email Compose view in a window like the app normally
+        // does as a Fixture for our tests.
+        //
         beforeEach(function (done) {
             compose = Ext.create({
                 xtype: 'window',
@@ -12,7 +15,7 @@ describe("Email.js", function() {
                 width: 600,
                 height: 450,
                 items: [{
-                    xtype: 'emailcompose'
+                    xtype: 'emailcompose'  // this is the real test subject
                 }],
                 lookup: function (ref) {
                     return this.getComponent(0).lookup(ref);
@@ -24,15 +27,19 @@ describe("Email.js", function() {
         });
         
         afterEach(function (done) {
+            // And teardown the fixture to leave the DOM clean.
             compose = Ext.destroy(compose);
             Ext.defer(done, 500);
         });
         
         it('should open', function () {
+            // Make sure the window gets rendered properly.
             expect(compose.el).toBeTruthy();
         });
         
         it('should close', function () {
+            // Simulate typing into the Subject field and then Discard and
+            // make sure the window closes properly.
             var win = ST.component(compose);
             
             ST.textField(compose.lookup('subjectField')).
