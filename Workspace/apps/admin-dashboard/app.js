@@ -1,3 +1,9 @@
+//<debug>
+if (location.search.match(/\bnolaunch\b/)) {
+    Ext.require('Admin.*');
+} else {
+//</debug>
+
 /*
  * This file is responsible for launching the application. Application logic should be
  * placed in the Admin.Application class.
@@ -16,3 +22,7 @@ Ext.application({
         'Admin.*'
     ]
 });
+
+//<debug>
+}
+//</debug>
