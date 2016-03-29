@@ -1,5 +1,5 @@
 describe("email", function() {
-    var Dash = {
+    var Email = {
         treeList: function () {
             return ST.component('treelist');
         },
@@ -47,7 +47,7 @@ describe("email", function() {
         describe('Grid actions', function(){
             var gridStore;
             beforeAll(function(){
-                Dash.emailGrid()
+                Email.emailGrid()
                     .viewReady()
                     .and(function(grid){
                         gridStore = grid.getStore();
@@ -55,20 +55,20 @@ describe("email", function() {
             });
             describe('should show email detail', function(){
                 it('when clicking on grid row', function(){
-                    Dash.mainPanelScrollY(0);
-                    Dash.emailGrid()
+                    Email.mainPanelScrollY(0);
+                    Email.emailGrid()
                         .rowAt(0)
                         .click();
-                    Dash.emailDetails()
+                    Email.emailDetails()
                         .visible();
 
-                    Dash.backButton().click(); //navigate back to email page
+                    Email.backButton().click(); //navigate back to email page
 
                 });
             });
             describe('columns are sortable', function(){
                 afterAll(function(next){
-                    Dash.emailGrid()
+                    Email.emailGrid()
                         .and(function(grid){
                             //reset sorting after tests
                             grid.getView().getScrollable().scrollBy(-1000,0);
@@ -78,11 +78,11 @@ describe("email", function() {
                 });
                 describe('by clicking on header', function(){
                     beforeAll(function(){
-                        Dash.mainPanelScrollY(0);
+                        Email.mainPanelScrollY(0);
                     });
                     var sorter;
                     it('\'From\' should sort emails by sender ASC', function(){
-                        Dash.gridColumn('From')
+                        Email.gridColumn('From')
                             .click(10,10)
                             .wait(50)
                             .and(function(){
@@ -93,7 +93,7 @@ describe("email", function() {
                             });
                     });
                     it('\'Title\' should sort emails by Title ASC', function(){
-                        Dash.gridColumn('Title')
+                        Email.gridColumn('Title')
                             .click(10,10)
                             .wait(50)
                             .and(function(){
@@ -105,11 +105,11 @@ describe("email", function() {
                     });
                     it('\'Received\' should sort emails by date ASC', function(){
                         //column might be scrolled out ov view on small screens, so we need to scroll it into view before testing
-                        Dash.emailGrid().
+                        Email.emailGrid().
                             and(function(grid){
                                 grid.getView().getScrollable().scrollBy(1000,0);
                         });
-                        Dash.gridColumn('Received')
+                        Email.gridColumn('Received')
                             .click(10,10)
                             .wait(50)
                             .and(function(){
@@ -118,49 +118,6 @@ describe("email", function() {
                                 expect(sorter.getProperty()).toBe('received_on');
                                 expect(gridStore.getAt(0).get('received_on')).toEqual(new Date('2014-02-11T04:24:27.000Z'));
                             });
-                    });
-                });
-                describe('by using header menu', function(){
-                    function sortColumnDesc(text,prop,expectedVal){
-                        var sorter,x,y;
-                        if(Dash.isDesktop){
-                            //1st we need to show header menu trigger for desktop and then open menu
-                            ST.play([
-                                { type: "mouseover", target: 'inbox gridcolumn[text='+text+']', x: 15, y: 2 }
-                            ]);
-                            ST.component('inbox gridcolumn[text='+text+'] => div.x-column-header-trigger')
-                                .click();
-                        }else{
-                            //or open header menu on tablet
-                            ST.component('inbox gridcolumn[text='+text+']').and(function(col){
-                                x = col.getWidth()-5;
-                                y = col.getHeight();
-                                ST.component('inbox gridcolumn[text='+text+']').click(x,y/2);
-                            });
-
-                        }
-                        ST.component('menuitem[text="Sort Descending"]')
-                            .click()
-                            .and(function(){
-                                sorter = gridStore.getSorters().getAt(0);
-                                expect(sorter.getDirection()).toBe('DESC');
-                                expect(sorter.getProperty()).toBe(prop);
-                                expect(gridStore.getAt(0).get(prop)).toEqual(expectedVal);
-                            });
-                        if(Dash.isDesktop){
-                            ST.play([
-                                { type: "mouseout", target: 'inbox gridcolumn[text='+text+']', x: 15, y: 2 } //remove highlight from column as would happen when user moves mouse out of column
-                            ]);
-                        }
-                    }
-                    it('\'From\' should sort DESC', function(){
-                        sortColumnDesc('From','from','Tammi Merrill');
-                    });
-                    it('\'Title\' should sort DESC', function(){
-                        sortColumnDesc('Title','title','Sunt labore qui velit nulla officia laboris do.');
-                    });
-                    it('\'Received\' should sort DESC', function(){
-                        sortColumnDesc('Received','received_on',new Date('2015-02-08T05:40:31.000Z'));
                     });
                 });
             });
@@ -173,14 +130,14 @@ describe("email", function() {
                         selModel.deselectAll();
                     });
                     beforeEach(function(next){
-                        Dash.emailGrid().viewReady().and(function(grid){
+                        Email.emailGrid().viewReady().and(function(grid){
                             selModel = grid.getSelectionModel();
                             next();
                         })
                     });
 
                     it('single row selection', function(done){
-                        Dash.emailGrid()
+                        Email.emailGrid()
                             .rowAt(0)
                             .cellAt(0)
                             .click()
@@ -191,7 +148,7 @@ describe("email", function() {
                             });
                     });
                     it('multiple row selection', function(){
-                        Dash.emailGrid()
+                        Email.emailGrid()
                             .rowAt(0).cellAt(0)
                             .click()
                             .wait(50)
@@ -218,7 +175,7 @@ describe("email", function() {
         describe("Email detail", function(){
             beforeEach(function(){
                 //ensure email detail is visible before each spec
-                Dash.emailGrid()
+                Email.emailGrid()
                     .viewReady()
                     .rowAt(0)
                     .click();
@@ -248,7 +205,7 @@ describe("email", function() {
                     });
             });
         });
-        if(Dash.isDesktop){
+        if(Email.isDesktop){
             describe('Keyboard navigation', function(){
                 describe('using tab', function(){
                     //checks if correct cells are focused when user TABs in grid
@@ -259,13 +216,13 @@ describe("email", function() {
                             { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//div[contains(@class, 'x-column-header-first')]", key: "Tab" },
                             { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[1]", key: "Tab" }
                         ]);
-                        Dash.emailGrid()
+                        Email.emailGrid()
                             .rowAt(0)
                             .cellAt(0)
                             .focused();
                     });
                     it('should tab between grid and header', function(){
-                        Dash.emailGrid()
+                        Email.emailGrid()
                             .rowAt(0)
                             .cellAt(0)
                             .focus();
@@ -306,7 +263,7 @@ describe("email", function() {
                     describe('in grid body', function(){
                         beforeEach(function(){
                             //focus 1st row/1st cell to ensure same staring point for following tests
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(0)
                                 .focus();
@@ -316,13 +273,13 @@ describe("email", function() {
                                 { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[1]", key: "ArrowRight" },
                                 { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[2]", key: "ArrowRight" }
                             ]);
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(1)
                                 .focused();
                         });
                         it('right arrow on last cell should move focus to first cell on next row', function(){
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(5)
                                 .focus();
@@ -330,13 +287,13 @@ describe("email", function() {
                                 { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[6]", key: "ArrowRight" },
                                 { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='1']/tbody/tr/td[1]", key: "ArrowRight" }
                             ]);
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(1)
                                 .cellAt(0)
                                 .focused();
                         });
                         it('left arrow should move to previous cell',function(){
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(1)
                                 .focus();
@@ -344,13 +301,13 @@ describe("email", function() {
                                 { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[2]", key: "ArrowLeft" },
                                 { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[1]", key: "ArrowLeft" }
                             ]);
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(0)
                                 .focused();
                         });
                         it('left arrow on first cell of second row should move focus to last cell on first row', function(){
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(0)
                                 .focus();
@@ -358,7 +315,7 @@ describe("email", function() {
                                 { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='1']/tbody/tr/td[1]", key: "ArrowLeft" },
                                 { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[6]", key: "ArrowLeft" }
                             ]);
-                            Dash.emailGrid()
+                            Email.emailGrid()
                                 .rowAt(0)
                                 .cellAt(5)
                                 .focused();
@@ -374,21 +331,21 @@ describe("email", function() {
     describe("Side panels", function(){
         describe("Compose email", function(){
             it("check window title", function() {
-                Dash.sideMenuItem('Compose').click();
+                Email.sideMenuItem('Compose').click();
                 ST.component('emailwindow').and(function(win) {
                     expect(win.getTitle()).toBe('Compose Message');
                 });
                 ST.button('emailwindow button[text=Discard]').click();
             });
             it("can close window by close tool", function(){
-                Dash.sideMenuItem('Compose').click();
+                Email.sideMenuItem('Compose').click();
                 ST.component('emailwindow tool[type=close]')
                     .click();
                 expect(Ext.WindowManager.getActive()).not.toBeDefined();
             });
             describe("type into fields", function(){
                 beforeEach(function(){
-                    Dash.sideMenuItem('Compose').click();
+                    Email.sideMenuItem('Compose').click();
                 });
                 afterEach(function(){
                     ST.button('emailwindow button[text=Discard]').click();

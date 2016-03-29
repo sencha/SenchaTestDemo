@@ -135,45 +135,7 @@ describe('Page search results', function() {
                     }
                 }
             });
-
-            //sort column using header menu and check that column is sorted using sorter
-            it('should sort using menu', function(){
-                var store = Ext.ComponentQuery.query('grid[title=User Results]')[0].getStore();
-                var names = ['#', 'User', 'Name', 'Email', 'Date', 'Subscription', 'Actions'];
-
-                for(var i = 1; i < names.length; i++){
-                    if(Ext.ComponentQuery.query('grid[title=User Results] gridcolumn[text=' + names[i] + ']')[0].sortable){
-
-                        ST.play([
-                            { type: 'mouseover', target: 'grid[title=User Results] gridcolumn[text=' + names[i] + ']' }
-                        ]);
-
-                        ST.component('grid[title=User Results] gridcolumn[text=' + names[i] + '] => div.x-column-header-trigger').click();
-
-                        ST.component('menuitem[text=Sort Ascending]').click().and(function(){
-                            expect(store.getSorters().getAt(0).getDirection()).toBe('ASC');
-                        });
-
-                        ST.play([
-                            { type: 'mouseover', target: 'grid[title=User Results] gridcolumn[text=' + names[i] + ']' }
-                        ]);
-
-                        ST.component('grid[title=User Results] gridcolumn[text=' + names[i] + '] => div.x-column-header-trigger').click();
-
-                        ST.component('menuitem[text=Sort Descending]')
-                            .click()
-                            .wait(100)
-                            .and(function(){
-                                expect(store.getSorters().getAt(0).getDirection()).toBe('DESC');
-                            });
-
-                        ST.play([
-                            {type: 'mouseout', target: 'grid[title=User Results] gridcolumn[text=' + names[i] + ']'}
-                        ]);
-                    }
-                }
-            });
-
+            
             //select first ten rows, click them and make sure each row is selected
             it('should select row after click', function(){
                 var selRow;
