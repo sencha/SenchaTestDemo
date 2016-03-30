@@ -78,13 +78,14 @@ describe('Forms', function(){
 
                 });
 
-                it('Email validation works properly', function () {
+                it('Email validation works properly - EXPECTED FAILURE due to missing validation', function () {
                     Form.textfield(color, 'ex: me@somewhere.com')
                         .click()
                         .type('user')
                         .and(function (el) {
                             expect(el.getValue()).toBe('user');
-                            //check if element valids data correctly
+                            //check if element validates data correctly
+                            // fails due to missing validatin
                             expect(el.isValid()).toBeFalsy();
 
                         })
@@ -106,7 +107,6 @@ describe('Forms', function(){
                     clearTextfield(Form.textfield(color, 'First Name'));
                     clearTextfield(Form.textfield(color, 'Last Name'));
                     clearTextfield(Form.textfield(color, 'Company'));
-                    //Form.button(color, 'Previous').click();
                 });
                 afterAll(function(){
                     Form.button(color, 'Previous').click();
@@ -239,8 +239,9 @@ describe('Forms', function(){
                     Form.button(color, 'Next').click().click().click();
                 });
                 // navigate back to init state
-                afterAll(function () {
-                    Form.button(color, 'Previous').click().click().click();
+                afterAll(function (done) {
+                    Form.button(color, 'Previous').click().click().click()
+                        .and(done);
                 });
                 describe("Button", function () {
                     it('\'Previous\' should not be active', function () {

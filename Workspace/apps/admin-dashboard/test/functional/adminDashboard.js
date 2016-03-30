@@ -99,6 +99,7 @@ describe("adminDashboard", function() {
                             expect(menuItem.isExpanded()).toBe(false);
                         })
                         .click()
+                        .wait(100) // waiting to make sure proper state will be available
                         .and(function(menuItem){
                             expect(menuItem.isExpanded()).toBe(true);
                         });
@@ -110,24 +111,20 @@ describe("adminDashboard", function() {
                         Dash.menuItem('Pages')
                             .and(function(menuItem){
                                 menuItem.expand();
-                            });
+                            }).wait(1000);
                     });
                     it('and navigate to Blank Page',function(){
                         Dash.menuItem('Blank Page')
-                            .click()
-                            .and(function(menuItem){
-                                expect(menuItem.el.hasCls('x-treelist-item-selected')).toBe(true);
-                            });
+                            .visible()
+                            .click();
                         Dash.blankPageView().visible();
-                    });
+                    }, 30000);
                     it('and navigate to Login view', function(){
                         Dash.menuItem('Login')
-                            .click()
-                            .and(function(menuItem){
-                                expect(menuItem.el.hasCls('x-treelist-item-selected')).toBe(true);
-                            });
+                            .visible()
+                            .click();
                         Dash.loginView().visible();
-                    });
+                    }, 30000);
                 });
 
             });

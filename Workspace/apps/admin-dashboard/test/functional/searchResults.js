@@ -69,6 +69,7 @@ describe('Page search results', function() {
                             .rowAt(i)
                             .reveal()
                             .click(100,10)
+                            .wait(100)
                             .and(function(row){
                                 selRow = row.record;
                             })
@@ -105,7 +106,7 @@ describe('Page search results', function() {
         describe('Gridpanel', function() {
             it('should be visible', function () {
                 Dash.searchGridUsRes()
-                    .rendered()
+                    .visible()
                     .and(function (grid) {
                         expect(grid.isHidden()).toBe(false);
                     });
@@ -119,40 +120,47 @@ describe('Page search results', function() {
                 for(var i = 1; i < names.length; i++){
                     if(Ext.ComponentQuery.query('grid[title=User Results] gridcolumn[text=' + names[i] + ']')[0].sortable){
 
-                        Dash.columnHeader(names[i]).rendered().click();
+                        Dash.columnHeader(names[i]).visible().click();
 
                         Dash.searchGridUsRes()
-                            .rendered()
+                            .visible()
                             .and(function(){
                                 expect(store.getSorters().getAt(0).getDirection()).toBe('ASC');
                             });
 
-                        Dash.columnHeader(names[i]).rendered().click();
+                        Dash.columnHeader(names[i]).click();
 
-                        Dash.searchGridUsRes().rendered().and(function(){
+                        Dash.searchGridUsRes().visible().and(function(){
                             expect(store.getSorters().getAt(0).getDirection()).toBe('DESC');
                         });
                     }
                 }
             });
-            
+
             //select first ten rows, click them and make sure each row is selected
-            it('should select row after click', function(){
-                var selRow;
+            describe('selecting grid rows', function(){
+                function clickRow(i){
+                    it('Clicking row '+ i + ' selects row ' + i, function () {
+                        var selRow;
+                        Dash.searchGridUsRes()
+                            .visible()
+                            .rowAt(i)
+                            .reveal()
+                            .click()
+                            .wait(100)
+                            .and(function(row){
+                                selRow = row.record;
+                            })
+                            .grid()
+                            .and(function(grid){
+                                expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
+                            });
+                    });
+                }
+
 
                 for(var i = 0; i < 10; i++){
-                    Dash.searchGridUsRes()
-                        .rendered()
-                        .rowAt(i)
-                        .reveal()
-                        .click()
-                        .and(function(row){
-                            selRow = row.record;
-                        })
-                        .grid()
-                        .and(function(grid){
-                            expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
-                        });
+                    clickRow(i);
                 }
             });
         });
@@ -187,69 +195,77 @@ describe('Page search results', function() {
             });
 
             //select first ten rows, click them and make sure each row is selected
-            it('should select row after click', function(){
-                var selectedRow;
-
+            describe('selecting grid rows', function(){
+                function clickRow(i){
+                    it('Clicking row '+ i + ' selects row ' + i, function () {
+                        var selectedRow;
+                        Dash.searchMessGrid()
+                            .visible()
+                            .rowAt(i).and(function(row){
+                                selectedRow = row.record;
+                            })
+                            .cellAt(1)
+                            .click()
+                            .wait(100)
+                            .grid()
+                            .and(function(grid){
+                                expect(grid.getSelectionModel().isSelected(selectedRow)).toBe(true);
+                            });
+                    });
+                }
                 for(var i = 0; i < 10; i++){
-                    Dash.searchMessGrid()
-                        .rendered()
-                        .rowAt(i).and(function(row){
-                            selectedRow = row.record;
-                        })
-                        .cellAt(1)
-                        .click()
-                        .grid()
-                        .and(function(grid){
-                            expect(grid.getSelectionModel().isSelected(selectedRow)).toBe(true);
-                        });
+                    clickRow(i);
                 }
             });
 
             //select a cell in grid and navigate right using keyboard events, then check focus changed
-            it('should navigate right using keyboard', function(){
-                var prevCell;
+            //disabled on tablets
+            if(Dash.isDesktop){
+                it('should navigate right using keyboard', function(){
+                    var prevCell;
 
-                Dash.searchMessGrid()
-                    .rendered()
-                    .rowAt(1)
-                    .cellAt(1)
-                    .click() //to set focus, alternatively you can use .focus()
-                    .and(function(cell){
-                        prevCell = cell;
-                    })
-                    .grid()
-                    .rowAt(1)
-                    .cellAt(2)
-                    .and(function(cell){
-                        ST.play([
-                            {type: 'keydown', target: '@' + prevCell.el.dom.id, key: 'ArrowRight'},
-                            {type: 'keyup', target: '@' + cell.el.dom.id, key: 'ArrowRight'}
-                        ]);
-                    }).focused();
-            });
+                    Dash.searchMessGrid()
+                        .rendered()
+                        .rowAt(1)
+                        .cellAt(1)
+                        .click() //to set focus, alternatively you can use .focus()
+                        .and(function(cell){
+                            prevCell = cell;
+                        })
+                        .grid()
+                        .rowAt(1)
+                        .cellAt(2)
+                        .and(function(cell){
+                            ST.play([
+                                {type: 'keydown', target: '@' + prevCell.el.dom.id, key: 'ArrowRight'},
+                                {type: 'keyup', target: '@' + cell.el.dom.id, key: 'ArrowRight'}
+                            ]);
+                        }).focused();
+                });
 
-            //select a cell in grid and navigate left using keyboard events, then check focus changed
-            it('should navigate left using keyboard', function(){
-                var prevCell;
+                //select a cell in grid and navigate left using keyboard events, then check focus changed
+                it('should navigate left using keyboard', function(){
+                    var prevCell;
 
-                Dash.searchMessGrid()
-                    .rendered()
-                    .rowAt(2)
-                    .cellAt(2)
-                    .click()//to set focus, alternatively you can use .focus()
-                    .and(function(cell){
-                        prevCell = cell;
-                    })
-                    .grid()
-                    .rowAt(2)
-                    .cellAt(1)
-                    .and(function(cell){
-                        ST.play([
-                            {type: 'keydown', target: '@' + prevCell.el.dom.id, key: 'ArrowLeft'},
-                            {type: 'keyup', target: '@' + cell.el.dom.id, key: 'ArrowLeft'}
-                        ])
-                    }).focused()
-            });
+                    Dash.searchMessGrid()
+                        .rendered()
+                        .rowAt(2)
+                        .cellAt(2)
+                        .click()//to set focus, alternatively you can use .focus()
+                        .and(function(cell){
+                            prevCell = cell;
+                        })
+                        .grid()
+                        .rowAt(2)
+                        .cellAt(1)
+                        .and(function(cell){
+                            ST.play([
+                                {type: 'keydown', target: '@' + prevCell.el.dom.id, key: 'ArrowLeft'},
+                                {type: 'keyup', target: '@' + cell.el.dom.id, key: 'ArrowLeft'}
+                            ])
+                        }).focused()
+                });
+            }
         });
     });
 });
