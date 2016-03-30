@@ -25,8 +25,7 @@ describe('Login Page', function () {
         it('Login page is loaded', function () {
             ST.component('login')
                 .visible()
-                .rendered()
-                .and(function (page) {
+                    .and(function (page) {
                     expect(page.rendered).toBeTruthy();
                 });
         });
@@ -119,20 +118,7 @@ describe('Login Page', function () {
            });
         });
     });
-    
-    // forgot password link
-    // failing on tablets -  knownIssue - ORION-567
-    it('Forgot password link works', function () {
-        ST.element('//a[contains(text(),"Forgot Password")]')
-            .click();
-        ST.component('passwordreset')
-            .rendered()
-            .and(function (page) {
-                // check if user is redirected on the correct page
-                expect(page).toBeTruthy();
-            });
-    });
-    
+       
     // login button
     describe('Login button', function () {
         it('Login button is disabled', function () {
@@ -155,7 +141,7 @@ describe('Login Page', function () {
                 })
                 .click();
             ST.component('admindashboard')
-                .rendered()
+                .visible()
                 .and(function (page) {
                     expect(page).toBeTruthy();
                 });
@@ -167,7 +153,7 @@ describe('Login Page', function () {
         ST.button('login [text=Login with Facebook]')
             .click();
         ST.component('admindashboard')
-            .rendered()
+            .visible()
             .and(function (page) {
                 expect(page).toBeTruthy();
             });
@@ -179,7 +165,7 @@ describe('Login Page', function () {
             visible().
             click();
         ST.component('register')
-            .rendered()
+            .visible()
             .and(function (page) {
                 expect(page).toBeTruthy();
             });

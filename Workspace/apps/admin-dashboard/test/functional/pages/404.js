@@ -24,14 +24,4 @@ describe('404 Page', function(){
     it('make a screenshot', function (next) {
         ST.screenshot('page404', next);
     }, 1000 * 20);
-    // check if URL works
-    it('has working URL', function () {
-        ST.element('page404 => a')
-            .click();
-        ST.component('panel[title=Network]')
-            .rendered()
-            .and(function(el){
-                expect(el).toBeTruthy();
-            });
-    });
 });

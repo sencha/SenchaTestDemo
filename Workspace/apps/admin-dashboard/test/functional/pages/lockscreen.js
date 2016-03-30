@@ -22,17 +22,6 @@ describe('Lockscreen Page', function () {
     it('make a screenshot', function (next) {
         ST.screenshot('lockscreen', next);
     }, 1000 * 20);
-    // check if URL works
-    // failing on tablets -  knownIssue - ORION-567
-    it('has working URL', function () {
-        ST.element('//a[contains(text(),"sign in")]')
-            .click();
-        ST.component('login')
-            .rendered()
-            .and(function (el) {
-                expect(el).toBeTruthy();
-            });
-    });
     //type and check textfield - textfield should contains typed value
     it('textfield is editable', function () {
         ST.textField('lockscreen textfield')

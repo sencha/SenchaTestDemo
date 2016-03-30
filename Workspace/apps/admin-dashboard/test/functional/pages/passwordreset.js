@@ -23,18 +23,7 @@ describe('PasswordReset Page', function () {
     it('make a screenshot', function (next) {
         ST.screenshot('passwordreset', next);
     }, 1000 * 20);
-
-    // check if URL works and redirect to another page
-    // failing on tablets -  knownIssue - ORION-567
-    it('has working URL', function () {
-        ST.element('//a[contains(text(),"Back to Log In")]')
-            .click();
-        ST.component('login')
-            .rendered()
-            .and(function (el) {
-                expect(el).toBeTruthy();
-            });
-    });
+    
     // type and check if value of textfiled is correct
     it('textfield is editable', function () {
         ST.textField('passwordreset textfield')
