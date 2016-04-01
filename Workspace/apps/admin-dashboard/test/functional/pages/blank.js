@@ -12,7 +12,7 @@ describe('Blank Page', function(){
            });
     });
     // comparing actual screen with expected screen
-    it('make a screenshot', function (next) {
-        ST.screenshot('pageblank', next);
+    it('make a screenshot', function (done) {
+        ST.screenshot('pageblank', done);
     }, 1000 * 20);
 });

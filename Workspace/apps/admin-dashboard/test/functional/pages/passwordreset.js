@@ -20,8 +20,8 @@ describe('PasswordReset Page', function () {
             });
     });
     // comparing actual screen with expected screen
-    it('make a screenshot', function (next) {
-        ST.screenshot('passwordreset', next);
+    it('make a screenshot', function (done) {
+        ST.screenshot('passwordreset', done);
     }, 1000 * 20);
     
     // type and check if value of textfiled is correct

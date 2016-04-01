@@ -24,8 +24,8 @@ describe('FAQ', function () {
 
     });
 
-    it('make a screenshot', function (next) {
-        ST.screenshot('form', next); // take a screenshot
+    it('make a screenshot', function (done) {
+        ST.screenshot('form', done); // take a screenshot
     }, 1000 * 20);
 
     it('check Useful tips panel', function () {

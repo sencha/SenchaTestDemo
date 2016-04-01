@@ -21,9 +21,9 @@ describe("adminProfile", function() {
           .visible();
     });
 
-    it('Take a screenshot', function (next) {
+    it('Take a screenshot', function (done) {
         // comparing actual screen with expected screen.
-        ST.screenshot('adminProfile', next);
+        ST.screenshot('adminProfile', done);
     }, 1000 * 20);
    
     it('TextArea is editable', function () {

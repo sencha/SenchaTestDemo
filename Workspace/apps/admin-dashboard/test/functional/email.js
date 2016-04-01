@@ -31,16 +31,16 @@ describe("email", function() {
         },
         isDesktop : ST.os.deviceType == "Desktop"
     };
-    beforeEach(function(next){
+    beforeEach(function(done){
         Admin.app.redirectTo("#email");
         // navigate app to correct page and wait to be visible
         ST.component('email').visible()
-            .and(next);
+            .and(done);
 
     });
     describe("Example loads correctly", function(){
-        it("Email page screenshot should match baseline", function(next) {
-            ST.screenshot('email',next);
+        it("Email page screenshot should match baseline", function(done) {
+            ST.screenshot('email',done);
         }, 1000 * 20);
     });
     describe("Inbox panel", function(){
@@ -67,13 +67,13 @@ describe("email", function() {
                 });
             });
             describe('columns are sortable', function(){
-                afterAll(function(next){
+                afterAll(function(done){
                     Email.emailGrid()
                         .and(function(grid){
                             //reset sorting after tests
                             grid.getView().getScrollable().scrollBy(-1000,0);
                             grid.getStore().getSorters().clear();
-                            grid.getStore().load(next);
+                            grid.getStore().load(done);
                         });
                 });
                 describe('by clicking on header', function(){
@@ -129,10 +129,10 @@ describe("email", function() {
                         //remove grid row selection before each test
                         selModel.deselectAll();
                     });
-                    beforeEach(function(next){
+                    beforeEach(function(done){
                         Email.emailGrid().viewReady().and(function(grid){
                             selModel = grid.getSelectionModel();
-                            next();
+                            done();
                         })
                     });
 

@@ -19,8 +19,8 @@ describe('Lockscreen Page', function () {
             });
     });
     // comparing actual screen with expected screen
-    it('make a screenshot', function (next) {
-        ST.screenshot('lockscreen', next);
+    it('make a screenshot', function (done) {
+        ST.screenshot('lockscreen', done);
     }, 1000 * 20);
     //type and check textfield - textfield should contains typed value
     it('textfield is editable', function () {

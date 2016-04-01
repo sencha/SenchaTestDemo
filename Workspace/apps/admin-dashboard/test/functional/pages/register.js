@@ -64,9 +64,9 @@ describe('Register Page', function () {
                 });
         });
         
-        it('Screen comparison of Register page', function (next) {
+        it('Screen comparison of Register page', function (done) {
             // comparing actual screen with expected screen
-            ST.screenshot('registerPage', next);
+            ST.screenshot('registerPage', done);
         }, 1000 * 20);
     });
     

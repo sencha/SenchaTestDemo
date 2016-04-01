@@ -21,7 +21,7 @@ describe('404 Page', function(){
             });
     });
     // comparing actual screen with expected screen
-    it('make a screenshot', function (next) {
-        ST.screenshot('page404', next);
+    it('make a screenshot', function (done) {
+        ST.screenshot('page404', done);
     }, 1000 * 20);
 });

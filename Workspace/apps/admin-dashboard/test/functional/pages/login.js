@@ -30,9 +30,9 @@ describe('Login Page', function () {
                 });
         });
         
-        it('Screen comparison of Login page', function (next) {
+        it('Screen comparison of Login page', function (done) {
             // comparing actual screen with expected screen
-            ST.screenshot('loginPage', next);
+            ST.screenshot('loginPage', done);
         }, 1000 * 20);
     });
     

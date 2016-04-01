@@ -11,7 +11,7 @@ describe('500 Page', function(){
             });
     });
     // comparing actual screen with expected screen
-    it('make a screenshot', function (next) {
-        ST.screenshot('page500', next, 5000 * 2);
+    it('make a screenshot', function (done) {
+        ST.screenshot('page500', done, 5000 * 2);
     }, 1000 * 20);
 });

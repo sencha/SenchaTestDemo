@@ -29,9 +29,9 @@ describe('Widgets Page', function () {
              { type: "mousedown", target: button1, x: 20, y: 10, detail: 1 }
          ]);
          ST.component(button1)
-             .and(function (button,next) {
+             .and(function (button,done) {
                  expect(button.el.dom.className).toContain('x-btn-pressed');
-                 next();
+                 done();
              });
          ST.play([
              // unpress button
@@ -55,9 +55,9 @@ describe('Widgets Page', function () {
                 });
         });
         
-        it('Screen comparison of Widgets page', function (next) {
+        it('Screen comparison of Widgets page', function (done) {
             // comparing actual screen with expected screen
-            ST.screenshot('widgetsPage', next);
+            ST.screenshot('widgetsPage', done);
         }, 1000 * 20);
     });
     
