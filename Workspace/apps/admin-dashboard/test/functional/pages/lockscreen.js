@@ -40,7 +40,7 @@ describe('Lockscreen Page', function () {
                 // Composite Query locator
                     // ST.textField('lockscreen => input[type=password]')
                     
-        ST.textField('@textfield-1105-inputEl') // At-Path locator used. DON'T USE this way, unstable solution.
+        ST.textField('lockscreen textfield') // At-Path locator used. DON'T USE this way, unstable solution.
             .type('GiveMeCookies')
             .and(function (textfield) {
                 expect(textfield.getValue()).toBe('GiveMeCookies');
