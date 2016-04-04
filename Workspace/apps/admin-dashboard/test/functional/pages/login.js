@@ -8,10 +8,24 @@ describe('Login Page', function () {
     // Canceling every changes on login page. We need to start every test from clear state
     afterEach ( function () {
         Admin.app.redirectTo("#login");
-        ST.textField('login [name=userid]')
-            .and(function (textfield) {
-                textfield.setValue(''); // clearing userid textfield
-            });
+            // we can locate element via couple of ways
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // Locating Elements
+                // At-Path locator needs to ID. It's bad practice to use dynamic ID
+                // dynamic ID is changing very often. This ID will change during the test run
+                    //ST.textField('@textfield-1102-inputEl')
+                // XPath locator
+                    // ST.textField("//input[@name='userid']")
+                // DOM Query locator
+                    ST.textField(">>input[name='userid']")
+            // Locating Components
+                // Component Query locator
+                    //ST.textField('login [name=userid]')
+                // Composite Query locator
+                    // ST.textField('login => input[name=userid]')
+                    .and(function (textfield) {
+                        textfield.setValue(''); // clearing userid textfield
+                    });
         ST.textField('login [name=password]')
             .and(function (textfield) {
                 textfield.setValue('');
@@ -107,14 +121,16 @@ describe('Login Page', function () {
         });
         
         it('Remember me checkbox is unchecked', function () {
-           ST.checkBox('login checkboxfield')
-           .click(0,15)
-           .checked()
-           .click(0,15)
-           .unchecked()
-           .and(function (checkbox) {
-               // check if checkbox is really unchecked
-               expect(checkbox.unchecked).toBeFalsy();
+            // select Remember me checkbox, as it is only one on the page, isn't 
+            // necessary to specify location
+            ST.checkBox('login checkboxfield')
+                .click(0,15)
+                .checked()
+                .click(0,15)
+                .unchecked()
+                .and(function (checkbox) {
+                    // check if checkbox is really unchecked
+                    expect(checkbox.unchecked).toBeFalsy();
            });
         });
     });
