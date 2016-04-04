@@ -1,12 +1,28 @@
 describe('Page Dashboard', function() {
+    /*
+     * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
+     * Instead of creating the future instance at the point of need,
+     * consider the following alternative.
+     **/
     var Dash = {
+        // Sencha Test provides multiple ways to locate an element from a text string
+        // A locator solves the same problem as a CSS selector but is a super-set of CSS selector syntax.
+        // The locator syntax is more expressive than selectors to provide more options for testing real-world applications.
+        // When testing applications, ideally the application developers provide a reliable way for testers
+        // to locate application components and elements.
+        // More info can be found in documentation http://docs.sencha.com/sencha_test/ST.Locator.html
+
+        // Example of ComponentQuery used to locate Ext.panel.Tool with variable name within panel titled Network
         tool: function (toolName) {
             return ST.component('panel[title=Network] tool[type=' + toolName + ']');
-        }, 
+        },
         todoGrid : function(){
             return ST.grid('panel[title=TODO List] grid');
         },
-        todoTextfield: function(){
+        panel : function(panelName){
+            return ST.component('panel[title='+panelName+']');
+        },
+        todoTextField: function(){
             return ST.textField('panel[title=TODO List] field');
         },
         //Scroll the main panel to ensure that target is visible
@@ -24,15 +40,15 @@ describe('Page Dashboard', function() {
 
     describe('Page \'Dashboard\'', function(){
         it('should be loaded correctly', function(){
-            ST.component('panel[title=TODO List]').visible();
-            ST.component('panel[title=Network]').visible();
-            ST.component('panel[title=Services]').visible();
+            Dash.panel('TODO List').visible();
+            Dash.panel('Network').visible();
+            Dash.panel('Services').visible();
         });
         
         //visually check whole page
         it('should take screenshot after 500ms wait', function(done){
             //wait for components to be available and animations finished before taking screenshot
-            ST.component('panel[title=Network]').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
+            Dash.panel('Network').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
                 ST.screenshot('dashboard', done);
             });
         }, 1000 * 20);
@@ -42,7 +58,7 @@ describe('Page Dashboard', function() {
             it('should select multiple rows by clicking on checkboxes', function(){
                 var model;
 
-                //not necessary for test execution, but it is nice to see what's happening
+                // not necessary for test execution, but it is nice to see what's happening
                 Dash.mainPanelScrollY(400);
 
                 Dash.todoGrid().visible()
@@ -63,11 +79,12 @@ describe('Page Dashboard', function() {
 
         describe('Textbox', function(){
             it('should write text in the field', function(){
-                Dash.todoTextfield()
+                Dash.todoTextField()
                     .visible()
                     .click()
                     .focus()
                     .type('Write some tests')
+                    // giving framework some time process user input before checking field value
                     .wait(100)
                     .and(function(field){
                         expect(field.value).toBe('Write some tests');
@@ -76,6 +93,7 @@ describe('Page Dashboard', function() {
         });
     });
     describe('Panel \'Network\'', function(){
+        // Network panel should have 2 action tools in header
         describe('Tool \'wrench\'', function(){
             it('should be visible', function(){
                 Dash.tool('wrench')
@@ -119,7 +137,6 @@ describe('Page Dashboard', function() {
             });
         });
     });
-    
 
     
     describe('Panel \'Services\'', function(){
@@ -128,6 +145,7 @@ describe('Page Dashboard', function() {
                 describe('Test polar chart ' + i ,function(){
                     var fl = ['first','last'];
                     it('should have enabled interaction, chart: ' + i, function(){
+                        //using ComponentQuery to locate first and last Chart in Service panel
                         ST.component('panel[title=Services] polar:' + fl[i]).visible().and(function(chart){
                             expect(chart.interactions[0].type).toBe('rotate');
                         });

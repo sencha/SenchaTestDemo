@@ -1,25 +1,47 @@
 describe('Page search results', function() {
+    /*
+     * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
+     * Instead of creating the future instance at the point of need,
+     * consider the following alternative.
+     **/
     var Dash = {
+        // Sencha Test provides multiple ways to locate an element from a text string
+        // A locator solves the same problem as a CSS selector but is a super-set of CSS selector syntax.
+        // The locator syntax is more expressive than selectors to provide more options for testing real-world applications.
+        // When testing applications, ideally the application developers provide a reliable way for testers
+        // to locate application components and elements.
+        // More info can be found in documentation http://docs.sencha.com/sencha_test/ST.Locator.html
+
+        // Following locates ExtJS Grid component based on it's xtype and title property - this locator is called ComponentQuery
+        // and can be used to locate Components in applications built using Sencha frameworks.
+        // The majority of logic operates at a layer above elements: Components.
+        // It is therefore more desirable to locate and operate on components than raw DOM elements.
+        // http://docs.sencha.com/extjs/6.0/6.0.2-classic/#!/api/Ext.ComponentQuery
         searchGridAll: function () {
+
             return ST.grid('gridpanel[title=All]');
         },
         searchGridUsRes: function(){
             return ST.grid('grid[title=User Results]');
         },
+        // Another example of Component query using diffent property - title
         searchTabbarTab: function(title){
             return ST.component('tabbar tab[title=' + title + ']');
         },
         searchMessGrid: function(){
             return ST.grid('grid[title=Messages]');
         },
+        // Scrolls app main container to desired Y offset
         mainPanelScrollY: function(scroll){
             return ST.component('container[id=main-view-detail-wrap]').and(function(panel){
                 panel.setScrollY(scroll);
             });
         },
+        // This ComponentQuery locator return Ext.grid.Column instance identified by it's parent grid and column name
         columnHeader: function(name){
             return ST.component('grid[title=User Results] gridcolumn[text=' + name + ']');
-        }
+        },
+        isDesktop : ST.os.deviceType == "Desktop"
     };
     
     beforeEach(function(){
@@ -65,15 +87,15 @@ describe('Page search results', function() {
                     var selRow;
                     //click first ten rows of grid and check they are selected
                         Dash.searchGridAll()
-                            .rendered()
-                            .rowAt(i)
-                            .reveal()
-                            .click(100,10)
+                            .viewReady()
+                            .rowAt(i) // get row at index i
+                            .reveal() // scroll row into view
+                            .click(100,10) // and click at x,y coordinates
                             .wait(100)
                             .and(function(row){
                                 selRow = row.record;
                             })
-                            .grid()
+                            .grid() // return to Grid component
                             .and(function(grid){
                                 expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
                             });
@@ -86,10 +108,10 @@ describe('Page search results', function() {
     describe('Tab \'User Results\'', function(){
         
         beforeEach(function(){
-            //scroll to top and select the right tab
+            //scroll to top and select the right tab before each spec
             Dash.mainPanelScrollY(0);
             Dash.searchTabbarTab('User Results')
-                .rendered()
+                .visible()
                 .click();
         });
 
@@ -219,24 +241,24 @@ describe('Page search results', function() {
             });
 
             //select a cell in grid and navigate right using keyboard events, then check focus changed
-            //disabled on tablets
+            //disabled on tablets, there is no need to test keyboard navigation on keyboardless devices
             if(Dash.isDesktop){
                 it('should navigate right using keyboard', function(){
                     var prevCell;
 
                     Dash.searchMessGrid()
-                        .rendered()
-                        .rowAt(1)
-                        .cellAt(1)
-                        .click() //to set focus, alternatively you can use .focus()
+                        .viewReady()
+                        .rowAt(1) //get second row
+                        .cellAt(1) //get second column
+                        .click() // and click to set focus, alternatively you can use .focus()
                         .and(function(cell){
                             prevCell = cell;
                         })
-                        .grid()
-                        .rowAt(1)
-                        .cellAt(2)
+                        .row() // return back to row
+                        .cellAt(2) //and get 3rd cell
                         .and(function(cell){
                             ST.play([
+                                // using At-Path location strategy to identify elements by their id
                                 {type: 'keydown', target: '@' + prevCell.el.dom.id, key: 'ArrowRight'},
                                 {type: 'keyup', target: '@' + cell.el.dom.id, key: 'ArrowRight'}
                             ]);

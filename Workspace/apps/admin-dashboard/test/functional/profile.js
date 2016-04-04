@@ -1,14 +1,25 @@
 describe("adminProfile", function() {
-
+    /*
+     * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
+     * Instead of creating the future instance at the point of need,
+     * consider the following alternative.
+     **/
     var Profile = {
+        // Using ComponentQuery to locate right Ext.panel.Panel by xtype and one of it's properties
+        // in this case we use iconCls or text of button to identify right test target
+        // More about Locators can be found in Sencha Test documentation
+        // http://docs.sencha.com/sencha_test/ST.Locator.html
         buttonByClass : function(className){
             return ST.button('profile button[iconCls='+className+']');
         },
         buttonByText : function(text){
             return ST.button('profile button[text='+text+']');
         },
+        // locate User Profile view by it's xtype
         view : function(){
             return ST.component("profile");
+            // or xpath "//div[contains(@class, 'userProfile-container')]"
+            // or DOM query ">>div.userProfile-container"
         }
     };
 
@@ -27,10 +38,11 @@ describe("adminProfile", function() {
     }, 1000 * 20);
    
     it('TextArea is editable', function () {
-        //Insert string into textarea.
+        // Type string into textarea.
+        // Locator uses one of text area configs to identify right target
 	    ST.component("textarea[emptyText=What's on your mind?]")     
 		    .click()
-		    .focus()
+		    .focus() //need to focus text area before typing
 		    .type('Silence!!! I kill you!!!')
 		    .and(function (editor){
 		        expect(editor.getValue()).toBe('Silence!!! I kill you!!!');

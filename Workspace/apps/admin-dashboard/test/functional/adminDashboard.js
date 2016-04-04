@@ -1,17 +1,45 @@
 describe("adminDashboard", function() {
+    /*
+     * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
+     * Instead of creating the future instance at the point of need,
+     * consider the following alternative.
+     **/
     var Dash = {
+        // Sencha Test provides multiple ways to locate an element from a text string
+        // A locator solves the same problem as a CSS selector but is a super-set of CSS selector syntax.
+        // The locator syntax is more expressive than selectors to provide more options for testing real-world applications.
+        // When testing applications, ideally the application developers provide a reliable way for testers
+        // to locate application components and elements.
+        // More info can be found in documentation http://docs.sencha.com/sencha_test/ST.Locator.html
+
+        // Following locates ExtJS TreeList component based on it's xtype - this locator is called ComponentQuery
+        // and can be used to locate Components in applications built using Sencha frameworks.
+        // The majority of logic operates at a layer above elements: Components.
+        // It is therefore more desirable to locate and operate on components than raw DOM elements.
+        // http://docs.sencha.com/extjs/6.0/6.0.2-classic/#!/api/Ext.ComponentQuery
         treeList: function () {
+            // ST.component('treelist') looks for instance of Ext.Tree.List component in application,
+            // in this case it means app navigation menu.
             return ST.component('treelist');
         },
         hamburger: function() {
-            return ST.component('@main-navigation-btn');
+            // using at-path to locate Menu Toggle element by it's id
+            // more info about at-path can be found in documentation
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // user might use different locators to achieve same result
+            // ComponentQuery - 'toolbar #main-navigation-btn'
+            // xpath - '//a[@id="main-navigation-btn"]'
+            return ST.component('#main-navigation-btn');
         },
         menuItem: function(itemName) {
+            // Another example of ComponentQuery used to lookup Ext.list.TreeItem component by xtype and text property
             return ST.component('treelistitem[text='+itemName+']');
         },
         toolbarItem: function(itemName) {
+            // ComponentQuery using href property to locate right button in Top toolbar.
             return ST.button('toolbar button[href=#'+itemName+']');
         },
+        // Following locators are in test used to verify if correct view is loaded in application.
         emailView: function() {
             return ST.component('email');
         },
@@ -34,12 +62,21 @@ describe("adminDashboard", function() {
         Admin.app.redirectTo("#dashboard"); // make sure you are on dashboard homepage
     });
 
+    describe("Example loads correctly", function(){
+        it("Admin dashboard page screenshot should match baseline", function(done) {
+            // Screenshots are only supported when running tests via CLI test runner
+            ST.screenshot('dash-navigation',done);
+        }, 1000 * 20);
+    });
+
     describe('App navigation', function(){
         describe("Tree menu", function(){
             it("treelist menu should be initially expanded", function(){
                 Dash.treeList()
+                    // Waiting is needed in this case to make sure test won't progress before all necessary parts are in place
                     .visible()
                     .and(function(navMenu){
+                        // If Tree List is expanded micro should be null.
                         expect(navMenu.getMicro()).toBeFalsy();
                     });
             });
@@ -69,6 +106,7 @@ describe("adminDashboard", function() {
                 it('and navigate to email view', function(){
                     Dash.menuItem('Email')
                         .click()
+                        // if selected it should be highlighted with right class
                         .hasCls('x-treelist-item-selected')
                         .and(function(menuItem){
                             expect(menuItem.el.hasCls('x-treelist-item-selected')).toBe(true);
@@ -141,11 +179,15 @@ describe("adminDashboard", function() {
                     Dash.toolbarItem('searchresults')
                         .click();
                 }
+                // Member expressions from candidate Components may be tested.
+                // If the expression returns a truthy value, the candidate Component will be included in the query result
+                // locator returns that is currently visible.
                 ST.component('tooltip{isVisible()}')
                     .contentLike(/See latest search/);
             });
             describe('navigate to pages using toolbar',function(){
-                if(Dash.isDesktop){ // Prevented due to issue when clicking toolbar buttons fails on tablets - https://sencha.jira.com/browse/ORION-588
+                if(Dash.isDesktop){
+                    // just click toolbar item and if right view is loaded in app's main container
                     it("clicking on magnifier tool should navigate you to Search page", function(){
                         Dash.toolbarItem('searchresults')
                             .click();
