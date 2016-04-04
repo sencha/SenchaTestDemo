@@ -1,9 +1,18 @@
 describe('Forms', function(){
     var Form = {
         button : function (color, text) {
+            // we can locate element via couple of ways
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // Locating Elements
+                // XPath locator
+                    // ST.button("//*[text()='" + text + "'][@class='x-btn-inner x-btn-inner-" + color + "-small']")
+            // Locating Components
+                // Component Query locator
+                    // ST.button('forms wizardform[colorScheme=' + color + '] button[text=' + text + ']')
             return ST.button('forms wizardform[colorScheme=' + color + '] button[text=' + text + ']');
         },
         textfield : function (color, emptyText) {
+            // we are selecting component according to colorScheme and text
             return ST.component('forms wizardform[colorScheme=' + color + '] textfield[emptyText=' + emptyText + ']');
         },
         checkbox : function(color, boxLabel){

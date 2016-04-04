@@ -2,7 +2,6 @@ describe('PasswordReset Page', function () {
     beforeEach(function () {
         Admin.app.redirectTo("#passwordreset");
     });
-
     //clean value of textfield
     afterEach(function () {
         Admin.app.redirectTo("#passwordreset");
@@ -23,7 +22,6 @@ describe('PasswordReset Page', function () {
     it('make a screenshot', function (done) {
         ST.screenshot('passwordreset', done);
     }, 1000 * 20);
-    
     // type and check if value of textfiled is correct
     it('textfield is editable', function () {
         ST.textField('passwordreset textfield')
@@ -65,16 +63,33 @@ describe('PasswordReset Page', function () {
     it('button should be active if texfield is valid', function () {
         ST.textField('passwordreset textfield')
             .type('user@sencha.com');
-        ST.button('passwordreset button')
+            
+        // we can locate element via couple of ways
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // Locating Elements
+                // At-Path locator needs to ID. It's bad practice to use dynamic ID
+                // dynamic ID is changing very often. This ID will change during the test run
+                    // ST.button('@button-1040-btnWrap')
+                // XPath locator
+                    // ST.button("//*[text()='Reset Password'][@data-ref='btnInnerEl']")
+                // DOM Query locator
+                    // ST.button(">>span[data-ref='btnInnerEl'].x-btn-inner-soft-blue-large")
+            // Locating Components
+                // Component Query locator
+                    // ST.button('passwordreset button')
+                // Composite Query locator
+                    // ST.button('passwordreset button => span.x-btn-inner-soft-blue-large')
+                
+        ST.button("//*[text()='Reset Password'][@data-ref='btnInnerEl']") // XPath locator is used
             .and(function (button) {
                 expect(button.isDisabled()).toBeFalsy();
             })
             .click();
+        // select title on Dashboard home page for checking correct redirection
         ST.component('panel[title=Network]')
             .rendered()
             .and(function (el) {
                 expect(el).toBeTruthy();
             });
-
     });
 });
