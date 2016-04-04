@@ -24,7 +24,23 @@ describe('Lockscreen Page', function () {
     }, 1000 * 20);
     //type and check textfield - textfield should contains typed value
     it('textfield is editable', function () {
-        ST.textField('lockscreen textfield')
+        // we can locate element via couple of ways
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // Locating Elements
+                // At-Path locator needs to ID. It's bad practice to use dynamic ID
+                // dynamic ID is changing very often. This ID will change during the test run
+                    // ST.textField('@textfield-1105-inputEl')
+                // XPath locator
+                    // ST.textField("//input[@type='password']")
+                // DOM Query locator
+                    // ST.textField(">>input[type='password']")
+            // Locating Components
+                // Component Query locator
+                    //ST.textField('lockscreen textfield')
+                // Composite Query locator
+                    // ST.textField('lockscreen => input[type=password]')
+                    
+        ST.textField('@textfield-1105-inputEl') // At-Path locator used. DON'T USE this way, unstable solution.
             .type('GiveMeCookies')
             .and(function (textfield) {
                 expect(textfield.getValue()).toBe('GiveMeCookies');

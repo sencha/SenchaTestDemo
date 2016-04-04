@@ -17,15 +17,16 @@ describe('Login Page', function () {
                 // XPath locator
                     // ST.textField("//input[@name='userid']")
                 // DOM Query locator
-                    ST.textField(">>input[name='userid']")
+                    // ST.textField(">>input[name='userid']")
             // Locating Components
                 // Component Query locator
                     //ST.textField('login [name=userid]')
                 // Composite Query locator
                     // ST.textField('login => input[name=userid]')
-                    .and(function (textfield) {
-                        textfield.setValue(''); // clearing userid textfield
-                    });
+            ST.textField(">>input[name='userid']") // DOW Query locator used  
+            .and(function (textfield) {
+                textfield.setValue(''); // clearing userid textfield
+            });
         ST.textField('login [name=password]')
             .and(function (textfield) {
                 textfield.setValue('');

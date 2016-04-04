@@ -49,7 +49,23 @@ describe('Register Page', function () {
                     textfield.setValue('');
                 });
         }
-        ST.checkBox('register checkbox')
+        // we can locate element via couple of ways
+            // http://docs.sencha.com/sencha_test/ST.Locator.html
+            // Locating Elements
+                // At-Path locator needs to ID. It's bad practice to use dynamic ID
+                // dynamic ID is changing very often. This ID will change during the test run
+                    // ST.checkBox('@checkbox-1106-displayEl')
+                // XPath locator
+                    // ST.checkBox("//span[@data-ref='displayEl']")
+                // DOM Query locator
+                    // ST.checkBox(">>span[data-ref='displayEl']")
+            // Locating Components
+                // Component Query locator
+                    //ST.checkBox('register checkbox')
+                // Composite Query locator
+                    // ST.checkBox("register => span[data-ref='displayEl']")
+                    
+        ST.checkBox("register => span[data-ref='displayEl']") // COmposite Query locator is used
             .uncheck();
     });
     
@@ -72,6 +88,7 @@ describe('Register Page', function () {
     
     // test all text fields on register page, using for cycle makes much shorter your final code
     // much better maintainable
+    // select and use all text fields, which are specified in listFields
     for(i=0 ; i<listFields.length ; i++) {
         testField(listFields[i],listValues[i]);
     }
