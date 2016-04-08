@@ -34,6 +34,14 @@ Ext.define('Admin.view.dashboard.DashboardController', {
         tool.toggleValue = !tool.toggleValue;
     },
 
+    onAddTodo : function() {
+        var store = this.getStore('todos');
+        var task = Ext.getCmp('new-task-text');
+        var newTask = task.getValue();
+        store.add( { task: newTask } );
+        task.setValue('');
+    },
+
     clearChartUpdates : function() {
         this.chartTaskRunner = Ext.destroy(this.chartTaskRunner);
     },

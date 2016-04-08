@@ -47,6 +47,7 @@ Ext.define('Admin.view.dashboard.Todos', {
                             xtype: 'textfield',
                             flex: 1,
                             fieldLabel: 'Add Task',
+                            id: 'new-task-text',
                             hideLabel: true,
                             width:540,
                             emptyText: 'Add New Task'
@@ -55,6 +56,9 @@ Ext.define('Admin.view.dashboard.Todos', {
                             xtype: 'button',
                             ui: 'soft-green',
                             width: 40,
+                            listeners: {
+                                click: 'onAddTodo'
+                            },
                             iconCls: 'x-fa fa-plus',
                             margin:'0 0 0 10'
                         }

@@ -16,16 +16,6 @@ Ext.define('Admin.data.dashboard.Tasks', {
             "id": 3,
             "task": "Upgrade to SSD harddisks",
             "done": false
-        },
-        {
-            "id": 4,
-            "task": "Pay server invoice",
-            "done": false
-        },
-        {
-            "id": 5,
-            "task": "Upgrade to SSD harddisks",
-            "done": false
         }
     ]
 });
