@@ -8,7 +8,9 @@
             "coverageFilters": [],
             "directory": "unit",
             "name": "Unit Tests",
-            "profile": "classic"
+            "profile": "classic",
+            "launch": false,
+            "page": ""
         },
         {
             "libs": [],
@@ -17,6 +19,15 @@
             "name": "Email",
             "page": "#email",
             "launch": true,
+            "profile": "classic"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "launch": true,
+            "directory": "todo",
+            "name": "Todo",
+            "page": "",
             "profile": "classic"
         }
     ],
