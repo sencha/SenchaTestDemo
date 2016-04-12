@@ -1,6 +1,3 @@
-/**
- * Created by nickrogers on 4/8/16.
- */
 Ext.define('Admin.model.Todo', {
     extend: 'Admin.model.Base',
     requires: [
@@ -34,9 +31,9 @@ Ext.define('Admin.model.Todo', {
                 data = [name, value];
             } else {
                 data = [{
-                    completedDate: done ? new Date() : null
+                    completedDate: value ? new Date() : null
                 }];
-                data[0].done = done;
+                data[0].done = value;
             }
         } else {
             if (data.done !== undefined) {

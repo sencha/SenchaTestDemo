@@ -86,20 +86,7 @@ Ext.define('Admin.view.dashboard.DashboardModel', {
         },
         todos: {
             autoLoad: true,
-            fields: [
-                {
-                    type: 'int',
-                    name: 'id'
-                },
-                {
-                    type: 'string',
-                    name: 'task'
-                },
-                {
-                    type: 'boolean',
-                    name: 'done'
-                }
-            ],
+            model: 'Admin.model.Todo',
             proxy: {
                 type: 'api',
                 url: '~api/dashboard/tasks'
