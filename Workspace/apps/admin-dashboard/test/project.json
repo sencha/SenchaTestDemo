@@ -7,7 +7,7 @@
             "libs": [],
             "coverageFilters": [],
             "directory": "unit",
-            "name": "Unit Tests",
+            "name": "Unit",
             "profile": "classic"
         },
         {
@@ -18,6 +18,12 @@
             "page": "#email",
             "launch": true,
             "profile": "classic"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "integration",
+            "name": "Integration"
         }
     ],
     "globals": "Admin"
