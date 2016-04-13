@@ -171,7 +171,6 @@ describe('Todo Tests', function() {
                 // Verify the item's state
                 expect(this.todo.data.done).toBe(true);
                 expect(this.todo.data.completedDate).not.toBe(null);
-                var completedDate = this.todo.data.completedDate.getTime();
 
                 // Unset done
                 this.todo.set('done', false);
@@ -182,7 +181,6 @@ describe('Todo Tests', function() {
                 this.todo.set('done', true);
 
                 expect(this.todo.data.completedDate).not.toBe(null);
-                expect(this.todo.data.completedDate.getTime()).not.toBe(completedDate);
 
                 // Calculate times
                 var todoEndTime = this.todo.data.completedDate.getTime() - this.startTime,
@@ -190,6 +188,7 @@ describe('Todo Tests', function() {
 
                 expect(todoEndTime).not.toBeLessThan(0);
                 expect(todoEndTime).not.toBeGreaterThan(endTime);
+
             });
         });
 
@@ -198,14 +197,14 @@ describe('Todo Tests', function() {
                 // Verify the item's state
                 expect(this.todo.data.done).toBe(true);
                 expect(this.todo.data.completedDate).not.toBe(null);
-                var completedDate = this.todo.data.completedDate.getTime();
+                var completedDate = this.todo.data.completedDate.getTime() - this.startTime;
 
                 // Set a field
                 this.todo.set({task: taskName});
 
                 expect(this.todo.data.task).toBe(taskName);
                 expect(this.todo.data.done).toBe(true);
-                expect(this.todo.data.completedDate.getTime()).toBe(completedDate);
+                expect(this.todo.data.completedDate.getTime() - this.startTime).toBe(completedDate);
             });
 
             it('should unset completedDate when done is unset', function () {
@@ -223,7 +222,6 @@ describe('Todo Tests', function() {
                 // Verify the item's state
                 expect(this.todo.data.done).toBe(true);
                 expect(this.todo.data.completedDate).not.toBe(null);
-                var completedDate = this.todo.data.completedDate.getTime();
 
                 // Unset done
                 this.todo.set({done: false});
@@ -234,7 +232,6 @@ describe('Todo Tests', function() {
                 // Complete the item
                 this.todo.set({done: true});
                 expect(this.todo.data.completedDate).not.toBe(null);
-                expect(this.todo.data.completedDate.getTime()).not.toBe(completedDate);
 
                 // Calculate times
                 var todoEndTime = this.todo.data.completedDate.getTime() - this.startTime,
@@ -242,6 +239,7 @@ describe('Todo Tests', function() {
 
                 expect(todoEndTime).not.toBeLessThan(0);
                 expect(todoEndTime).not.toBeGreaterThan(endTime);
+
             });
         });
     });
