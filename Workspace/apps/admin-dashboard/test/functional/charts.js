@@ -1,5 +1,13 @@
 describe("Checking charts", function() {
+      /*
+       * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
+       * Instead of creating the future instance at the point of need,
+       * consider the following alternative.
+       **/
     var Dash = {
+        // Test uses ComponenTQuery locators to identify single Charts within Chart page by xtype.
+        // All chart classes are defined with unique xtype so we can use these as a shortcut for each panel
+        // Inspect /apps/admin-dashboard/app/view/charts to find out how xtype is defined
         chartsAreaPanel : function () {
             return ST.component('chartsareapanel');
         },
@@ -27,7 +35,6 @@ describe("Checking charts", function() {
     });
     it('Take a screenshot', function (done) {
         // comparing actual screen with expected screen
-        // is it correct?? .rendered()??
         Dash.chartsPage().visible().rendered(); // make sure all charts are visible and laid out properly
         ST.screenshot('adminCharts', done);
     }, 1000 * 20);
