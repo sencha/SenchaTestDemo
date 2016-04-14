@@ -25,7 +25,6 @@ describe('Forms', function(){
         },
         isDesktop : ST.os.deviceType == "Desktop"
     };
-
 // type text into field identified by color and label
     function typeAndValidate(color, label, text){
         it( label + ' should be editable', function () {
@@ -45,17 +44,14 @@ describe('Forms', function(){
     }
 // test single form identified by it's color
     function colorForm(color){
-
         describe(color + ' form', function () {
             describe('WizardForm first page', function () {
-
                 afterEach(function () {
                     //remove values from textfields
                     clearTextfield(Form.textfield(color, 'Username must be unique.'));
                     clearTextfield(Form.textfield(color, 'ex: me@somewhere.com'));
                     clearTextfield(Form.textfield(color, 'Enter a password'));
                     clearTextfield(Form.textfield(color, 'Passwords must match'));
-
                 });
                 // check if buttons have correct state
                 describe("Button", function () {
@@ -64,15 +60,12 @@ describe('Forms', function(){
                             expect(cmp.isDisabled()).toBeTruthy();
                         });
                     });
-
                     it('\'Next\' should be active', function () {
                         Form.button(color, 'Next').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
                 });
-
-
                 describe('TextField', function () {
                     // array - [[emptyText of textfield, typed string]]
                     var strings = [
@@ -84,9 +77,7 @@ describe('Forms', function(){
                     // much better maintainable
                     for(var i = 0; i < strings.length; i++)
                         typeAndValidate(color, strings[i][0], strings[i][1]);
-
                 });
-
                 it('Email validation works properly - EXPECTED FAILURE due to missing validation', function () {
                     Form.textfield(color, 'ex: me@somewhere.com')
                         .click()
@@ -96,7 +87,6 @@ describe('Forms', function(){
                             //check if element validates data correctly
                             // fails due to missing validatin
                             expect(el.isValid()).toBeFalsy();
-
                         })
                         .type('@sencha.com')
                         .and(function (el) {
@@ -132,7 +122,6 @@ describe('Forms', function(){
                         });
                     });
                 });
-
                 describe('TextField', function () {
                     var strings = [['First Name', 'Cookie'],
                         ['Last Name', 'Monster'],
@@ -202,7 +191,6 @@ describe('Forms', function(){
                     });
                 });
             });
-
             describe('WizardForm third page', function () {
                 //need to navigate to 3rd slide before each test
                 beforeAll(function () {
@@ -271,7 +259,6 @@ describe('Forms', function(){
         Admin.app.redirectTo("#forms");
 
     });
-
     // check if page is loaded properly
     it('loads correctly', function(){
         Form.button('blue', 'Next')
@@ -280,7 +267,6 @@ describe('Forms', function(){
                 expect(panel.rendered).toBeTruthy();
         });
     });
-
     // comparing actual screen with expected screen
     it('make a screenshot', function(done){
         ST.screenshot('form', done);
@@ -290,6 +276,5 @@ describe('Forms', function(){
         colorForm('blue');
         colorForm('soft-green');
         colorForm('soft-purple');
-
     });
 });

@@ -56,19 +56,18 @@ describe("adminDashboard", function() {
             return ST.component('login');
         },
         isDesktop : ST.os.deviceType == "Desktop"
-
     };
     beforeEach(function(){
         Admin.app.redirectTo("#dashboard"); // make sure you are on dashboard homepage
     });
-
     describe("Example loads correctly", function(){
         it("Admin dashboard page screenshot should match baseline", function(done) {
             // Screenshots are only supported when running tests via CLI test runner
-            ST.screenshot('dash-navigation',done);
+            Dash.treeList().visible().and(function(){
+                ST.screenshot('dash-navigation',done);
+            });
         }, 1000 * 20);
     });
-
     describe('App navigation', function(){
         describe("Tree menu", function(){
             it("treelist menu should be initially expanded", function(){
@@ -82,7 +81,6 @@ describe("adminDashboard", function() {
             });
             it("clicking on hamburger should toggle treelist navigation mode - collapse", function() {
                 Dash.hamburger()
-                    .visible()
                     .click();
                 Dash.treeList()
                     .and(function(navMenu){
@@ -93,7 +91,6 @@ describe("adminDashboard", function() {
             });
             it("clicking on hamburger should toggle treelist navigation mode - collapse and expand", function(){
                 Dash.hamburger()
-                    .visible()
                     .click()
                     .click();
                 Dash.treeList()
@@ -137,7 +134,10 @@ describe("adminDashboard", function() {
                             expect(menuItem.isExpanded()).toBe(false);
                         })
                         .click()
-                        .wait(100) // waiting to make sure proper state will be available
+                        // waiting to make sure proper state will be available
+                        .wait(function (menuItem) {
+                            return menuItem.isExpanded();
+                        }) 
                         .and(function(menuItem){
                             expect(menuItem.isExpanded()).toBe(true);
                         });
@@ -149,22 +149,23 @@ describe("adminDashboard", function() {
                         Dash.menuItem('Pages')
                             .and(function(menuItem){
                                 menuItem.expand();
-                            }).wait(1000);
+                            }).wait(function (menuItem) {
+                                return menuItem.isExpanded();
+                            });
                     });
-                    it('and navigate to Blank Page',function(){
+                    it('and navigate to Blank Page',function(done){
                         Dash.menuItem('Blank Page')
-                            .visible()
                             .click();
                         Dash.blankPageView().visible();
+                        done();
                     }, 30000);
-                    it('and navigate to Login view', function(){
+                    it('and navigate to Login view', function(done){
                         Dash.menuItem('Login')
-                            .visible()
                             .click();
                         Dash.loginView().visible();
+                        done();
                     }, 30000);
                 });
-
             });
         });
         describe("Toolbar", function(){
@@ -186,13 +187,13 @@ describe("adminDashboard", function() {
                     .contentLike(/See latest search/);
             });
             describe('navigate to pages using toolbar',function(){
+                // these test cases aren't executed on mobile devices
                 if(Dash.isDesktop){
                     // just click toolbar item and if right view is loaded in app's main container
                     it("clicking on magnifier tool should navigate you to Search page", function(){
                         Dash.toolbarItem('searchresults')
                             .click();
                         Dash.searchView().visible();
-
                     });
                     it("clicking on email tool should navigate you to Email page", function(){
                         Dash.toolbarItem('email')

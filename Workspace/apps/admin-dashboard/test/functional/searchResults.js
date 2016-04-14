@@ -18,7 +18,6 @@ describe('Page search results', function() {
         // It is therefore more desirable to locate and operate on components than raw DOM elements.
         // http://docs.sencha.com/extjs/6.0/6.0.2-classic/#!/api/Ext.ComponentQuery
         searchGridAll: function () {
-
             return ST.grid('gridpanel[title=All]');
         },
         searchGridUsRes: function(){
@@ -43,28 +42,22 @@ describe('Page search results', function() {
         },
         isDesktop : ST.os.deviceType == "Desktop"
     };
-    
     beforeEach(function(){
         Admin.app.redirectTo("#searchresults"); // make sure you are on search results page
     });
-
-
-
     describe('Tab \'All\'', function(){
-        
-        beforeEach(function(){
+        beforeAll(function(){
             //scroll to top and select the right tab
             Dash.mainPanelScrollY(0);
             Dash.searchTabbarTab('All')
                 .rendered()
                 .click();
         });
-
         describe('Screenshot tab \'All\'', function(){
             //visually check whole page
-            it('should take screenshot after 500ms wait', function(done){
+            it('should take screenshot', function(done){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('All').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
+                Dash.searchTabbarTab('All').visible().rendered().and(function(){
                     ST.screenshot('tabAll', done);
                 });
             }, 1000 * 30);
@@ -81,17 +74,18 @@ describe('Page search results', function() {
             for(var i = 0; i < 10; i++) {
                 checkRowSelection(i);
             }
-
             function checkRowSelection(i){
                 it('row # '+i+' should be selected after click', function(){
-                    var selRow;
+                    var selRow,gridStore;
                     //click first ten rows of grid and check they are selected
                         Dash.searchGridAll()
                             .viewReady()
                             .rowAt(i) // get row at index i
                             .reveal() // scroll row into view
                             .click(100,10) // and click at x,y coordinates
-                            .wait(100)
+                            .wait(function(row){
+                                return Ext.first("gridpanel[title=All]").getSelectionModel().isSelected(row.record);
+                            })
                             .and(function(row){
                                 selRow = row.record;
                             })
@@ -99,32 +93,27 @@ describe('Page search results', function() {
                             .and(function(grid){
                                 expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
                             });
-
                 });
             }
         });
     });
-    
     describe('Tab \'User Results\'', function(){
-        
-        beforeEach(function(){
+        beforeAll(function(){
             //scroll to top and select the right tab before each spec
             Dash.mainPanelScrollY(0);
             Dash.searchTabbarTab('User Results')
                 .visible()
                 .click();
         });
-
         describe('Screenshot tab \'User Results\'', function(){
             //visually check whole page
-            it('should take screenshot after 500ms wait', function(done){
+            it('should take screenshot', function(done){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('User Results').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
+                Dash.searchTabbarTab('User Results').visible().rendered().and(function(){
                     ST.screenshot('tabUserResults', done);
                 });
             }, 1000 * 30);
         });
-
         describe('Gridpanel', function() {
             it('should be visible', function () {
                 Dash.searchGridUsRes()
@@ -133,32 +122,25 @@ describe('Page search results', function() {
                         expect(grid.isHidden()).toBe(false);
                     });
             });
-
             //click each sortable header and check that corresponding column is sorted using sorter
             it('should sort after click on header', function(){
                 var store = Ext.ComponentQuery.query('grid[title=User Results]')[0].getStore();
                 var names = ['#', 'User', 'Name', 'Email', 'Date', 'Subscription', 'Actions'];
-
                 for(var i = 1; i < names.length; i++){
                     if(Ext.ComponentQuery.query('grid[title=User Results] gridcolumn[text=' + names[i] + ']')[0].sortable){
-
                         Dash.columnHeader(names[i]).visible().click();
-
                         Dash.searchGridUsRes()
                             .visible()
                             .and(function(){
                                 expect(store.getSorters().getAt(0).getDirection()).toBe('ASC');
                             });
-
                         Dash.columnHeader(names[i]).click();
-
                         Dash.searchGridUsRes().visible().and(function(){
                             expect(store.getSorters().getAt(0).getDirection()).toBe('DESC');
                         });
                     }
                 }
             });
-
             //select first ten rows, click them and make sure each row is selected
             describe('selecting grid rows', function(){
                 function clickRow(i){
@@ -169,7 +151,9 @@ describe('Page search results', function() {
                             .rowAt(i)
                             .reveal()
                             .click()
-                            .wait(100)
+                            .wait(function(row){
+                                return Ext.first("grid[title=User Results]").getSelectionModel().isSelected(row.record);
+                            })
                             .and(function(row){
                                 selRow = row.record;
                             })
@@ -179,34 +163,29 @@ describe('Page search results', function() {
                             });
                     });
                 }
-
-
                 for(var i = 0; i < 10; i++){
                     clickRow(i);
                 }
             });
         });
     });
-    
     describe('Tab \'Messages\'', function(){
-        beforeEach( function(){
+        beforeAll( function(){
             //scroll to the top and select the right tab
             Dash.mainPanelScrollY(0);
             Dash.searchTabbarTab('Messages')
                 .rendered()
                 .click();
         });
-
         describe('Screenshot tab \'Messages\'', function(){
             //visually check whole page
-            it('should take screenshot after 500ms wait', function(done){
+            it('should take screenshot', function(done){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('Messages').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
+                Dash.searchTabbarTab('Messages').visible().rendered().and(function(){
                     ST.screenshot('tabMessages', done);
                 });
             }, 1000 * 30);
         });
-
         describe('Gridpanel', function(){
             it('should be visible', function(){
                 Dash.searchMessGrid()
@@ -215,7 +194,6 @@ describe('Page search results', function() {
                         expect(grid.isHidden()).toBe(false);
                     });
             });
-
             //select first ten rows, click them and make sure each row is selected
             describe('selecting grid rows', function(){
                 function clickRow(i){
@@ -228,7 +206,9 @@ describe('Page search results', function() {
                             })
                             .cellAt(1)
                             .click()
-                            .wait(100)
+                            .wait(function(){
+                                return Ext.first("grid[title=Messages]").getSelectionModel().isSelected(selectedRow);
+                            })
                             .grid()
                             .and(function(grid){
                                 expect(grid.getSelectionModel().isSelected(selectedRow)).toBe(true);
@@ -239,13 +219,11 @@ describe('Page search results', function() {
                     clickRow(i);
                 }
             });
-
             //select a cell in grid and navigate right using keyboard events, then check focus changed
             //disabled on tablets, there is no need to test keyboard navigation on keyboardless devices
             if(Dash.isDesktop){
                 it('should navigate right using keyboard', function(){
                     var prevCell;
-
                     Dash.searchMessGrid()
                         .viewReady()
                         .rowAt(1) //get second row
@@ -264,11 +242,9 @@ describe('Page search results', function() {
                             ]);
                         }).focused();
                 });
-
                 //select a cell in grid and navigate left using keyboard events, then check focus changed
                 it('should navigate left using keyboard', function(){
                     var prevCell;
-
                     Dash.searchMessGrid()
                         .rendered()
                         .rowAt(2)

@@ -33,22 +33,19 @@ describe('Page Dashboard', function() {
             });
         }
     };
-    
     beforeEach(function(){
         Admin.app.redirectTo("#dashboard"); // make sure you are on dashboard homepage
     });
-
     describe('Page \'Dashboard\'', function(){
         it('should be loaded correctly', function(){
             Dash.panel('TODO List').visible();
             Dash.panel('Network').visible();
             Dash.panel('Services').visible();
         });
-        
         //visually check whole page
-        it('should take screenshot after 500ms wait', function(done){
+        it('should take screenshot', function(done){
             //wait for components to be available and animations finished before taking screenshot
-            Dash.panel('Network').visible().wait(500/*if screens vary, try to increase this a bit*/).and(function(){
+            Dash.panel('Network').visible().rendered().and(function(){
                 ST.screenshot('dashboard', done);
             });
         }, 1000 * 20);
@@ -57,35 +54,38 @@ describe('Page Dashboard', function() {
         describe('Gridpanel', function(){
             it('should select multiple rows by clicking on checkboxes', function(){
                 var model;
-
                 // not necessary for test execution, but it is nice to see what's happening
                 Dash.mainPanelScrollY(400);
-
                 Dash.todoGrid().visible()
                     .and(function(grid){
                         model = grid.getSelectionModel();
                     })
-                    .rowAt(0).cellAt(0).click().wait(100)
-                    .grid().rowAt(2).cellAt(0).click(15,15).wait(100)
-                    .grid().rowAt(3).cellAt(0).click(15,15).wait(100).and(function(){
-                    expect(model.isSelected(0)).toBeTruthy();
-                    expect(model.isSelected(1)).toBeFalsy();
-                    expect(model.isSelected(2)).toBeTruthy();
-                    expect(model.isSelected(3)).toBeTruthy();
-                    expect(model.isSelected(4)).toBeFalsy();
-                });
+                    .rowAt(0).cellAt(0).click().and(function(){
+                        model.isSelected(0);
+                    })
+                    .grid().rowAt(2).cellAt(0).click(15,15).and(function(){
+                        model.isSelected(2);
+                    })
+                    .grid().rowAt(3).cellAt(0).click(15,15).and(function(){
+                        model.isSelected(3);
+                    })
+                    .and(function(){
+                        expect(model.isSelected(0)).toBeTruthy();
+                        expect(model.isSelected(1)).toBeFalsy();
+                        expect(model.isSelected(2)).toBeTruthy();
+                        expect(model.isSelected(3)).toBeTruthy();
+                        expect(model.isSelected(4)).toBeFalsy();
+                    });
             });
         });
-
         describe('Textbox', function(){
             it('should write text in the field', function(){
                 Dash.todoTextField()
-                    .visible()
                     .click()
                     .focus()
                     .type('Write some tests')
                     // giving framework some time process user input before checking field value
-                    .wait(100)
+                    .valueLike('Write some tests')
                     .and(function(field){
                         expect(field.value).toBe('Write some tests');
                     });
@@ -100,32 +100,28 @@ describe('Page Dashboard', function() {
                     .visible();  
             });
         });
-        
         describe('Tool \'refresh\'', function(){
             it('should be visible', function(){
                 Dash.tool('refresh')
                     .visible();
             });
         });
-
-        
         describe('Chartnetwork chart', function(){
             it('should animate after click on tool', function(){
-                var data1, data2;
-                
+                var data1, data2, dataStore;
                 //when animation is running the underlying data are changing 
                 //so we store data, start animation and compare the new data with the old ones
                 ST.component('panel[title=Network] chartnetwork')
                     .and(function(panel){
-                        data1 = panel.getStore().getAt(0).data;
+                        dataStore = panel.getStore();
+                        data1 = dataStore.getAt(0).data;
                     });
-                
                 Dash.tool('refresh')
-                    .visible()
                     .click()
-                    .wait(1000)
+                    .wait(function () {
+                        return dataStore.isLoaded(); // waiting for the store to load
+                    })
                     .click();
-
                 ST.component('panel[title=Network] chartnetwork')
                     .and(function(panel){
                         data2 = panel.getStore().getAt(0).data;
@@ -133,12 +129,9 @@ describe('Page Dashboard', function() {
                     .and(function(){
                         expect(data1).not.toEqual(data2);
                     });
-                    
             });
         });
     });
-
-    
     describe('Panel \'Services\'', function(){
         describe('Polar charts', function(){
             function checkInteraction(i){

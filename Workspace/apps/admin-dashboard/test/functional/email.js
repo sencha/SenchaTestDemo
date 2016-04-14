@@ -95,9 +95,7 @@ describe("email", function() {
                             .click();
                     Email.emailDetails()
                         .visible();
-
                     Email.backButton().click(); //navigate back to email page
-
                 });
             });
             describe('columns are sortable', function(){
@@ -118,7 +116,9 @@ describe("email", function() {
                     it('\'From\' should sort emails by sender ASC', function(){
                         Email.gridColumn('From')
                             .click(10,10)
-                            .wait(50)
+                            .wait(function () {
+                                return gridStore.isLoaded(); // waiting for the store to load
+                            })
                             .and(function(){
                                 sorter = gridStore.getSorters().getAt(0);
                                 // check correct grid sorting - verifying sort direction, sort property and if first row shows expected result
@@ -130,7 +130,9 @@ describe("email", function() {
                     it('\'Title\' should sort emails by Title ASC', function(){
                         Email.gridColumn('Title')
                             .click(10,10)
-                            .wait(50)
+                            .wait(function () {
+                                return gridStore.isLoaded(); // waiting for the store to load
+                            })
                             .and(function(){
                                 sorter = gridStore.getSorters().getAt(0);
                                 // check correct grid sorting - verifying sort direction, sort property and if first row shows expected result
@@ -147,7 +149,9 @@ describe("email", function() {
                         });
                         Email.gridColumn('Received')
                             .click(10,10)
-                            .wait(50)
+                            .wait(function () {
+                                return gridStore.isLoaded(); // waiting for the store to load
+                            })
                             .and(function(){
                                 sorter = gridStore.getSorters().getAt(0);
                                 // check correct grid sorting - verifying sort direction, sort property and if first row shows expected result
@@ -172,16 +176,18 @@ describe("email", function() {
                             .and(function(grid){
                                 selModel = grid.getSelectionModel();
                             done();
-                        })
+                        });
                     });
-
                     it('single row selection', function(done){
                         Email.emailGrid()
                             .rowAt(0) // first row
                                 .cellAt(0) // first cell
                                 .reveal() // and scroll cell into view
                                 .click()
-                                .wait(50) // let framework process click event and check result
+                                // let framework process click event and check result
+                                .wait(function () {
+                                    return selModel.isSelected(0);
+                                })
                                 .and(function(){
                                     expect(selModel.isSelected(0)).toBeTruthy();
                                     done();
@@ -193,23 +199,27 @@ describe("email", function() {
                                 .cellAt(0) // cell index
                                 .reveal() // scroll into view
                                 .click()
-                                .wait(50)
+                                .wait(function () {
+                                    return selModel.isSelected(0);
+                                })
                             .grid().rowAt(1) // pick different row
                                 .cellAt(0)
                                 .reveal()
                                 .click()
-                                .wait(50)
+                                .wait(function () {
+                                    return selModel.isSelected(1);
+                                })
                                 .and(function(){
                                     expect(selModel.isSelected(0)).toBeTruthy();
                                     expect(selModel.isSelected(1)).toBeTruthy();
-
                                 });
                     });
                     it('select all rows', function(){
-
                         Email.checkAllCheckbox()
                             .click()
-                            .wait(50)
+                            .wait(function () {
+                                return selModel.isRangeSelected(0,19);
+                            })
                             .and(function(){
                                 expect(selModel.isRangeSelected(0,19)).toBe(true);
                             });
@@ -226,7 +236,6 @@ describe("email", function() {
                     .rowAt(0)
                         .reveal()
                         .click();
-
             });
             afterEach(function(){
                 //need to navigate back after each spec
@@ -243,12 +252,11 @@ describe("email", function() {
                         htmleditor.toggleSourceEdit(true);
                     });
                 ST.component('emaildetails htmleditor')
-                    .visible()
                     .click()
                     .focus()// textarea needs to be focused before typing
-                    .type('Empowering organizations to rapidly design, deploy, and manage mission-critical cross-platform web apps.')
+                    .type('Testing drives quality...')
                     .and(function(editor){
-                        expect(editor.getValue()).toBe('Empowering organizations to rapidly design, deploy, and manage mission-critical cross-platform web apps.');
+                        expect(editor.getValue()).toContain('Testing drives quality...');
                     });
             });
         });
@@ -279,11 +287,9 @@ describe("email", function() {
                             .rowAt(0)
                                 .cellAt(0)
                                 .focus();
-
                         ST.play([
                             { type: "keydown", target: "//div[contains(@class,'email-inbox-panel')]//table[@data-recordindex='0']/tbody/tr/td[1]", key: "Tab" , shift : true},
                             { type: "keyup", target: "//div[contains(@class,'email-inbox-panel')]//div[contains(@class, 'x-column-header-first')]", key: "Tab", shift : true }
-
                         ]);
                         Email.checkAllCheckbox()
                             .focused();
@@ -382,8 +388,6 @@ describe("email", function() {
                         });
                     });
                 });
-
-
             });
         }
 
@@ -414,7 +418,8 @@ describe("email", function() {
                     ST.textField('emailwindow textfield[fieldLabel=To]').
                     click().
                     focus().
-                    type('George Washington').wait(50).
+                    type('George Washington').
+                    valueLike('George Washington').
                     and(function(input) {
                         expect(input.getValue()).toBe('George Washington');
                     });
@@ -423,7 +428,8 @@ describe("email", function() {
                     ST.textField('emailwindow textfield[fieldLabel=Subject]').
                     click().
                     focus().
-                    type('Sencha').wait(50).
+                    type('Sencha').
+                    valueLike('Sencha').
                     and(function(input) {
                         expect(input.getValue()).toBe('Sencha');
                     });
@@ -437,9 +443,9 @@ describe("email", function() {
                     Email.composeEmailEditor()
                         .click()
                         .focus()
-                        .type('Empowering organizations to rapidly design, deploy, and manage mission-critical cross-platform web apps.')
+                        .type('Testing drives quality...')
                         .and(function(editor){
-                            expect(editor.getValue()).toBe('Empowering organizations to rapidly design, deploy, and manage mission-critical cross-platform web apps.');
+                            expect(editor.getValue()).toContain('Testing drives quality...');
                         });
                 });
             });

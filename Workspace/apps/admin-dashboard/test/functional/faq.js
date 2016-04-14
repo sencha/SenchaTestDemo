@@ -26,15 +26,12 @@ describe('FAQ', function () {
         // redirect to page route #faq
         Admin.app.redirectTo("#faq");
     });
-
     it('loads correctly', function () {
         Faq.panel('FAQs').visible();
     });
-
     it('make a screenshot', function (done) {
         ST.screenshot('faq', done); // take a screenshot
     }, 1000 * 20);
-
     it('check Useful tips panel', function () {
         //If width is below 1000 px side panels are not visible
         if (window.innerWidth > 1000) {
@@ -49,9 +46,7 @@ describe('FAQ', function () {
             // });
         }
     });
-
     describe('FAQ panel', function () {
-
         function checkSubPanel(title, i){
             it('should expand sub panel '+ i +' by clicking on header ', function () {
                 Faq.subPanelHeader(title, i).click();
@@ -63,16 +58,13 @@ describe('FAQ', function () {
         }
         function checkPanel(title, sumSubPanel) {
             describe(title, function () {
-
                 afterEach(function(){
                     Faq.panel(title)
                         .and(function(panel){
                             //Expand first item after each spec to ensure same baseline for all tests
                             panel.items.items[0].expand();
                         });
-
                 });
-                
                 it('should collapse first sub panel and expand second sub panel by clicking on header', function () {
                     Faq.panel(title);
                     Faq.subPanelHeader(title, 1).click();
@@ -90,13 +82,9 @@ describe('FAQ', function () {
                     checkSubPanel(title,i);
                 }
             });
-
         }
-
         checkPanel('General', 4);
         checkPanel('Account', 4);
         checkPanel('Payment', 3);
-
     });
-
 });

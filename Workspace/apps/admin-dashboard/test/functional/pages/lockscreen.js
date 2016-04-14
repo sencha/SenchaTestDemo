@@ -39,14 +39,12 @@ describe('Lockscreen Page', function () {
                     //ST.textField('lockscreen textfield')
                 // Composite Query locator
                     // ST.textField('lockscreen => input[type=password]')
-                    
-        ST.textField('lockscreen textfield') // At-Path locator used. DON'T USE this way, unstable solution.
+        ST.textField('lockscreen => input[type=password]') // Composite Query locator used.
             .type('GiveMeCookies')
             .and(function (textfield) {
                 expect(textfield.getValue()).toBe('GiveMeCookies');
             });
     });
-
     it('textfield show not be empty', function () {
         ST.textField('lockscreen textfield')
             .and(function (el) {
@@ -57,7 +55,6 @@ describe('Lockscreen Page', function () {
                 expect(el.isValid()).toBeTruthy();
             });
     });
-
     //type valid value to textfield and check button - button should be active
     it('button should react on valid texfield', function () {
         ST.textField('lockscreen textfield')
@@ -71,7 +68,9 @@ describe('Lockscreen Page', function () {
                 el.setValue('');
             });
         ST.button('lockscreen button')
-            .wait(200)
+            .wait(function (button) {
+                return button.isDisabled();
+            })
             .and(function (button) {
                 expect(button.isDisabled()).toBeTruthy();
             });

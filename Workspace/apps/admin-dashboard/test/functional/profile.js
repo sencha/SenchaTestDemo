@@ -22,21 +22,17 @@ describe("adminProfile", function() {
             // or DOM query ">>div.userProfile-container"
         }
     };
-
     beforeEach(function(){
         Admin.app.redirectTo("#profile"); // make sure you are on Profile homepage.
     });
-
     it('Page loaded correctly', function () {
         Profile.view() // check if Profile page loaded correctly.
           .visible();
     });
-
     it('Take a screenshot', function (done) {
         // comparing actual screen with expected screen.
         ST.screenshot('adminProfile', done);
     }, 1000 * 20);
-   
     it('TextArea is editable', function () {
         // Type string into textarea.
         // Locator uses one of text area configs to identify right target
@@ -48,7 +44,6 @@ describe("adminProfile", function() {
 		        expect(editor.getValue()).toBe('Silence!!! I kill you!!!');
 	    });
     });
-
     describe("Buttons", function() {
         // Check if buttons are loaded and clickable
         it('Button Video Camera', function () {

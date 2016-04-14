@@ -63,7 +63,6 @@ describe('PasswordReset Page', function () {
     it('button should be active if texfield is valid', function () {
         ST.textField('passwordreset textfield')
             .type('user@sencha.com');
-            
         // we can locate element via couple of ways
             // http://docs.sencha.com/sencha_test/ST.Locator.html
             // Locating Elements
