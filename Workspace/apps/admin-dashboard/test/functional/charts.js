@@ -5,7 +5,7 @@ describe("Checking charts", function() {
        * consider the following alternative.
        **/
     var Dash = {
-        // Test uses ComponenTQuery locators to identify single Charts within Chart page by xtype.
+        // Test uses ComponentQuery locators to identify single Charts within Chart page by xtype.
         // All chart classes are defined with unique xtype so we can use these as a shortcut for each panel
         // Inspect /apps/admin-dashboard/app/view/charts to find out how xtype is defined
         chartsAreaPanel : function () {

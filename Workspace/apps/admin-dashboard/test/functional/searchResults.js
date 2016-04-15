@@ -84,7 +84,7 @@ describe('Page search results', function() {
                             .reveal() // scroll row into view
                             .click(100,10) // and click at x,y coordinates
                             .wait(function(row){
-                                return Ext.first("gridpanel[title=All]").getSelectionModel().isSelected(row.record);
+                                return row.grid().cmp.getSelectionModel().isSelected(row.record);
                             })
                             .and(function(row){
                                 selRow = row.record;
@@ -152,7 +152,7 @@ describe('Page search results', function() {
                             .reveal()
                             .click()
                             .wait(function(row){
-                                return Ext.first("grid[title=User Results]").getSelectionModel().isSelected(row.record);
+                                return row.grid().cmp.getSelectionModel().isSelected(row.record);
                             })
                             .and(function(row){
                                 selRow = row.record;
