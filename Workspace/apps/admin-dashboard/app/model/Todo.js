@@ -5,22 +5,10 @@ Ext.define('Admin.model.Todo', {
     ],
 
     fields: [
-        {
-            type: 'int',
-            name: 'id'
-        },
-        {
-            type: 'string',
-            name: 'task'
-        },
-        {
-            type: 'boolean',
-            name: 'done'
-        },
-        {
-            type: 'date',
-            name: 'completedDate'
-        }
+        { type: 'int', name: 'id' },
+        { type: 'string', name: 'task' },
+        { type: 'boolean', name: 'done' },
+        { type: 'date', name: 'completedDate' }
     ],
 
     set: function(name, value) {
