@@ -13,9 +13,8 @@
         {
             "libs": [],
             "coverageFilters": [],
-            "directory": "email",
-            "name": "Email",
-            "page": "#email",
+            "directory": "functional",
+            "name": "Functional Tests",
             "launch": true,
             "profile": "classic"
         },
