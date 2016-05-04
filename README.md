@@ -12,8 +12,8 @@ a set of test runs copied from a Sencha Test Archive Server. See the
 [walkthrough](walkthrough/Workspace/Readme.md) for the story being told by the test
 runs for this project.
 
-The **Admin** application in this workspace has a complete Functional test suite as
-well as examples of Unit tests as well as Integration tests.
+The **Admin** application in this workspace has a complete Functional test suite in
+addition to examples of Unit tests as well as Integration tests.
 
 ## TestProject
 This is a stand-alone test workspace. There is no Sencha framework or even an application
