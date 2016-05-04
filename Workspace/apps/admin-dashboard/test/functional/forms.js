@@ -11,20 +11,25 @@ describe('Forms', function(){
                     // ST.button('forms wizardform[colorScheme=' + color + '] button[text=' + text + ']')
             return ST.button('forms wizardform[colorScheme=' + color + '] button[text=' + text + ']');
         },
+
         textfield : function (color, emptyText) {
             // we are selecting component according to colorScheme and text
             return ST.component('forms wizardform[colorScheme=' + color + '] textfield[emptyText=' + emptyText + ']');
         },
+
         checkbox : function(color, boxLabel){
             return ST.checkBox('forms wizardform[colorScheme=' + color + '] checkbox[boxLabel='+ boxLabel+']');
         },
+
         mainPanelScrollY: function(scroll){
             return ST.component('container[id=main-view-detail-wrap]').and(function(panel){
                 panel.setScrollY(scroll);
             });
         },
+
         isDesktop : ST.os.deviceType == "Desktop"
     };
+
 // type text into field identified by color and label
     function typeAndValidate(color, label, text){
         it( label + ' should be editable', function () {
@@ -35,6 +40,7 @@ describe('Forms', function(){
                 });
         });
     }
+
 //remove value from given component - in this case it is only textfield
     function clearTextfield(cmp) {
         cmp
@@ -42,6 +48,7 @@ describe('Forms', function(){
                 cmp.setValue('');
             });
     }
+
 // test single form identified by it's color
     function colorForm(color){
         describe(color + ' form', function () {
@@ -53,6 +60,7 @@ describe('Forms', function(){
                     clearTextfield(Form.textfield(color, 'Enter a password'));
                     clearTextfield(Form.textfield(color, 'Passwords must match'));
                 });
+
                 // check if buttons have correct state
                 describe("Button", function () {
                     it('\'Previous\' should be disabled', function () {
@@ -60,12 +68,14 @@ describe('Forms', function(){
                             expect(cmp.isDisabled()).toBeTruthy();
                         });
                     });
+
                     it('\'Next\' should be active', function () {
                         Form.button(color, 'Next').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
                 });
+
                 describe('TextField', function () {
                     // array - [[emptyText of textfield, typed string]]
                     var strings = [
@@ -73,11 +83,13 @@ describe('Forms', function(){
                         ['ex: me@somewhere.com', 'user@sencha.com'],
                         ['Enter a password', 'giveMeCookies'],
                         ['Passwords must match', 'giveMeCookies']];
+
                     // loop for checking all texfields
                     // much better maintainable
                     for(var i = 0; i < strings.length; i++)
                         typeAndValidate(color, strings[i][0], strings[i][1]);
                 });
+
                 it('Email validation works properly - EXPECTED FAILURE due to missing validation', function () {
                     Form.textfield(color, 'ex: me@somewhere.com')
                         .click()
@@ -96,32 +108,38 @@ describe('Forms', function(){
                         });
                 });
             });
+
             describe('WizardForm second page', function () {
                 //move to next slide before each spec
                 beforeAll(function () {
                     Form.button(color, 'Next').click();
                 });
+
                 // clean up field values after each spec and navigate back
                 afterEach(function () {
                     clearTextfield(Form.textfield(color, 'First Name'));
                     clearTextfield(Form.textfield(color, 'Last Name'));
                     clearTextfield(Form.textfield(color, 'Company'));
                 });
+
                 afterAll(function(){
                     Form.button(color, 'Previous').click();
                 });
+
                 describe("Button", function () {
                     it('\'Previous\' should be active', function () {
                         Form.button(color, 'Previous').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
+
                     it('\'Next\' should be active', function () {
                         Form.button(color, 'Next').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
                 });
+
                 describe('TextField', function () {
                     var strings = [['First Name', 'Cookie'],
                         ['Last Name', 'Monster'],
@@ -132,6 +150,7 @@ describe('Forms', function(){
                         typeAndValidate(color, strings[i][0], strings[i][1]);
                     }
                 });
+
                 // clicking on radiobutton and check - if clicking change checked checkbox
                 describe('RadioButton group check', function () {
                     beforeAll(function(){
@@ -143,12 +162,14 @@ describe('Forms', function(){
                             });
                         }
                     });
+
                     afterEach(function(){
                         //set checkbox group selection to default state
                         Form.checkbox(color, 'Free').uncheck();
                         Form.checkbox(color, 'Personal').uncheck();
                         Form.checkbox(color, 'Black').uncheck();
                     });
+
                     it('check \'Free\' checkbox ', function(){
                         Form.checkbox(color, 'Free')
                             .and(function(el){
@@ -159,6 +180,7 @@ describe('Forms', function(){
                                 expect(el.checked).toBeTruthy();
                             });
                     });
+
                     it('check \'Personal\' checkbox ', function(){
                         Form.checkbox(color, 'Personal')
                             .and(function(el){
@@ -169,6 +191,7 @@ describe('Forms', function(){
                                 expect(el.checked).toBeTruthy();
                             });
                     });
+
                     it('\'Free\' checkbox should be unchecked when \'Personal\' is checked', function(){
                         Form.checkbox(color, 'Free')
                             .check();
@@ -179,6 +202,7 @@ describe('Forms', function(){
                                 expect(el.checked).toBeFalsy();
                             });
                     });
+
                     it('check \'Black\' checkbox ', function(){
                         Form.checkbox(color, 'Black')
                             .and(function(el){
@@ -191,61 +215,72 @@ describe('Forms', function(){
                     });
                 });
             });
+
             describe('WizardForm third page', function () {
                 //need to navigate to 3rd slide before each test
                 beforeAll(function () {
                     Form.button(color, 'Next').click().click();
                 });
+
                 //clean up field values after each spec and navigate back to init state
                 afterEach(function () {
                     clearTextfield(Form.textfield(color, 'Phone number'));
                     clearTextfield(Form.textfield(color, 'Address'));
                     clearTextfield(Form.textfield(color, 'City'));
                     clearTextfield(Form.textfield(color, 'Postal Code / Zip Code'));
-                });
+                })
+
                 afterAll(function(){
                     Form.button(color, 'Previous').click().click();
                 });
+
                 describe("Button", function () {
                     it('\'Previous\' should be active', function () {
                         Form.button(color, 'Previous').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
+
                     it('\'Next\' should be active', function () {
                         Form.button(color, 'Next').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
                 });
+
                 describe('TextFields are editable', function () {
                     describe('TextField', function () {
                         var strings = [['Phone number', '+420777666555'],
                             ['Address', 'Sesame street 5'],
                             ['City', 'Prague'],
                             ['Postal Code / Zip Code', '123']];
-                        for(var i = 0; i < strings.length; i++){
+
+                        for (var i = 0; i < strings.length; i++) {
                             typeAndValidate(color, strings[i][0], strings[i][1]);
                         }
                     });
                 });
             });
+
             describe('WizardForm fourth page', function () {
                 // navigate to right page in form
                 beforeAll(function () {
                     Form.button(color, 'Next').click().click().click();
                 });
+
                 // navigate back to init state
                 afterAll(function (done) {
                     Form.button(color, 'Previous').click().click().click()
                         .and(done);
                 });
+
                 describe("Button", function () {
                     it('\'Previous\' should not be active', function () {
                         Form.button(color, 'Previous').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeFalsy();
                         });
                     });
+
                     it('\'Next\' should be active', function () {
                         Form.button(color, 'Next').and(function (cmp) {
                             expect(cmp.isDisabled()).toBeTruthy();
@@ -255,10 +290,11 @@ describe('Forms', function(){
             });
         });
     }
+
     beforeEach(function () {
         Admin.app.redirectTo("#forms");
-
     });
+
     // check if page is loaded properly
     it('loads correctly', function(){
         Form.button('blue', 'Next')
@@ -267,12 +303,14 @@ describe('Forms', function(){
                 expect(panel.rendered).toBeTruthy();
         });
     });
+
     // comparing actual screen with expected screen
     it('make a screenshot', function(done){
         ST.screenshot('form', done);
     }, 1000 * 20);
+
     // call function and give a color of forms
-    describe('Panel', function(){
+    describe('Panel', function () {
         colorForm('blue');
         colorForm('soft-green');
         colorForm('soft-purple');

@@ -1,15 +1,17 @@
 describe('Widgets Page', function () {
     var locator = {
-         createBig : function (text,order)  {
-             return 'widgets button[text=' + text + ']:nth-child(' + order + ')';
-         },
-         createSmall : function(order) {
-             return 'widgets button:nth-child(' + order + ')';
-         }
-     },
-     bigButtons = ['Follow','Message'],
-     smallButtons = ['Facebook','Twitter',"Google+","Envelope"],
-     i, button1;
+        createBig : function (text,order)  {
+            return 'widgets button[text=' + text + ']:nth-child(' + order + ')';
+        },
+
+        createSmall : function(order) {
+            return 'widgets button:nth-child(' + order + ')';
+        }
+    },
+    bigButtons = ['Follow','Message'],
+    smallButtons = ['Facebook','Twitter',"Google+","Envelope"],
+    i, button1;
+
     // common function for testing buttons on widgets page
     function testButtons (element,button,order) {
         it('Click on ' + button + ' button on ' + element, function () {
@@ -34,12 +36,14 @@ describe('Widgets Page', function () {
                 // unpress button
                 { type: "mouseup", target: button1, x: 20, y: 10, detail: 1 }
             ]);
-     });
+        });
     }
+
     // We need to  start every test from widgets page, even the first round.
     beforeEach(function () {
         Admin.app.redirectTo("#widgets");
     });
+
     // widgets page
     describe('Widgets page - common', function () {
         it('Widgets page is loaded', function () {
@@ -50,11 +54,13 @@ describe('Widgets Page', function () {
                     expect(page.rendered).toBeTruthy();
                 });
         });
+
         it('Screen comparison of Widgets page', function (done) {
             // comparing actual screen with expected screen
             ST.screenshot('widgetsPage', done);
         }, 1000 * 20);
     });
+
     // test all text fields on register page, using for cycle makes much shorter your final code
     // much better maintainable
     
@@ -64,12 +70,14 @@ describe('Widgets Page', function () {
             testButtons('John Doe',bigButtons[i],1);
         }
     });
+
     // click on the buttons on Lucy Moon
     describe('Lucy Moon buttons', function () {
         for(i=0 ; i<smallButtons.length ; i++) {
             testButtons('Lucy Moon',smallButtons[i],i+3);
         }
     });
+
     // click on the buttons on Goff Smith
     describe('Goff Smith buttons', function () {
         for(i=0 ; i<bigButtons.length ; i++) {

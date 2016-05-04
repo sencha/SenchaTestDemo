@@ -2,6 +2,7 @@ describe('PasswordReset Page', function () {
     beforeEach(function () {
         Admin.app.redirectTo("#passwordreset");
     });
+
     //clean value of textfield
     afterEach(function () {
         Admin.app.redirectTo("#passwordreset");
@@ -10,6 +11,7 @@ describe('PasswordReset Page', function () {
                 el.setValue('');
             });
     });
+
     // if page is rendered properly
     it('is loaded', function () {
         ST.component('passwordreset')
@@ -18,10 +20,12 @@ describe('PasswordReset Page', function () {
                 expect(el.rendered).toBeTruthy();
             });
     });
+
     // comparing actual screen with expected screen
     it('make a screenshot', function (done) {
         ST.screenshot('passwordreset', done);
     }, 1000 * 20);
+
     // type and check if value of textfiled is correct
     it('textfield is editable', function () {
         ST.textField('passwordreset textfield')
@@ -30,6 +34,7 @@ describe('PasswordReset Page', function () {
                 expect(textfield.getValue()).toBe('GiveMeCookies@MonsterCookie.com');
             });
     });
+
     // type invalid value and check - textfield should be invalid
     it('textfield validation - invalid email', function () {
         ST.textField('passwordreset textfield')
@@ -38,6 +43,7 @@ describe('PasswordReset Page', function () {
                 expect(el.isValid()).toBeFalsy();
             });
     });
+
     // type valid value and check - texfield should be valid
     it('textfield validation - valid email', function () {
         ST.textField('passwordreset textfield')
@@ -46,6 +52,7 @@ describe('PasswordReset Page', function () {
                 expect(el.isValid()).toBeTruthy();
             });
     });
+
     // type invalid value and check button - button should be disabled
     it('button should be disabled if texfield is invalid', function () {
         ST.textField('passwordreset textfield')
@@ -59,6 +66,7 @@ describe('PasswordReset Page', function () {
             .rendered()
             .visible();
     });
+
     // type valid value and check button - button should be enabled
     it('button should be active if texfield is valid', function () {
         ST.textField('passwordreset textfield')
@@ -84,6 +92,7 @@ describe('PasswordReset Page', function () {
                 expect(button.isDisabled()).toBeFalsy();
             })
             .click();
+
         // select title on Dashboard home page for checking correct redirection
         ST.component('panel[title=Network]')
             .rendered()

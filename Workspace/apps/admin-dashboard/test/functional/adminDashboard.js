@@ -22,6 +22,7 @@ describe("adminDashboard", function() {
             // in this case it means app navigation menu.
             return ST.component('treelist');
         },
+
         hamburger: function() {
             // using at-path to locate Menu Toggle element by it's id
             // more info about at-path can be found in documentation
@@ -31,35 +32,45 @@ describe("adminDashboard", function() {
             // xpath - '//a[@id="main-navigation-btn"]'
             return ST.component('#main-navigation-btn');
         },
+
         menuItem: function(itemName) {
             // Another example of ComponentQuery used to lookup Ext.list.TreeItem component by xtype and text property
             return ST.component('treelistitem[text='+itemName+']');
         },
+
         toolbarItem: function(itemName) {
             // ComponentQuery using href property to locate right button in Top toolbar.
             return ST.button('toolbar button[href=#'+itemName+']');
         },
+
         // Following locators are in test used to verify if correct view is loaded in application.
         emailView: function() {
             return ST.component('email');
         },
+
         profileView: function(){
             return ST.component('profile');
         },
+
         searchView: function() {
             return ST.component('searchresults');
         },
+
         blankPageView: function() {
             return ST.component('pageblank');
         },
+
         loginView: function() {
             return ST.component('login');
         },
+
         isDesktop : ST.os.deviceType == "Desktop"
     };
+
     beforeEach(function(){
         Admin.app.redirectTo("#dashboard"); // make sure you are on dashboard homepage
     });
+
     describe("Example loads correctly", function(){
         it("Admin dashboard page screenshot should match baseline", function(done) {
             // Screenshots are only supported when running tests via CLI test runner
@@ -68,6 +79,7 @@ describe("adminDashboard", function() {
             });
         }, 1000 * 20);
     });
+
     describe('App navigation', function(){
         describe("Tree menu", function(){
             it("treelist menu should be initially expanded", function(){
@@ -79,6 +91,7 @@ describe("adminDashboard", function() {
                         expect(navMenu.getMicro()).toBeFalsy();
                     });
             });
+
             it("clicking on hamburger should toggle treelist navigation mode - collapse", function() {
                 Dash.hamburger()
                     .click();
@@ -89,6 +102,7 @@ describe("adminDashboard", function() {
                 //return to initial state
                 Dash.hamburger().click();
             });
+
             it("clicking on hamburger should toggle treelist navigation mode - collapse and expand", function(){
                 Dash.hamburger()
                     .click()
@@ -98,6 +112,7 @@ describe("adminDashboard", function() {
                         expect(navMenu.getMicro()).toBe(false);
                     });
             });
+
             describe('click in menu', function(){
                 // Click in menu and check if correct view is loaded
                 it('and navigate to email view', function(){
@@ -110,6 +125,7 @@ describe("adminDashboard", function() {
                         });
                     Dash.emailView().visible();
                 });
+
                 it('and navigate to profile view', function(){
                     Dash.menuItem('Profile')
                         .click()
@@ -120,6 +136,7 @@ describe("adminDashboard", function() {
                     Dash.profileView().visible();
                 });
             });
+
             describe('navigate in nested menu', function(){
                 beforeEach(function(){
                     //Need to ensure menu item is collapsed
@@ -128,6 +145,7 @@ describe("adminDashboard", function() {
                             menuItem.collapse();
                         });
                 });
+
                 it('click to expand menu item', function(){
                     Dash.menuItem('Pages')
                         .and(function(menuItem){
@@ -142,6 +160,7 @@ describe("adminDashboard", function() {
                             expect(menuItem.isExpanded()).toBe(true);
                         });
                 });
+
                 describe('click in nested menu', function(){
                     // Click in nested menu and check if correct view is loaded
                     beforeEach(function(){
@@ -153,12 +172,14 @@ describe("adminDashboard", function() {
                                 return menuItem.isExpanded();
                             });
                     });
+
                     it('and navigate to Blank Page',function(done){
                         Dash.menuItem('Blank Page')
                             .click();
                         Dash.blankPageView().visible();
                         done();
                     }, 30000);
+
                     it('and navigate to Login view', function(done){
                         Dash.menuItem('Login')
                             .click();
@@ -168,14 +189,15 @@ describe("adminDashboard", function() {
                 });
             });
         });
+
         describe("Toolbar", function(){
             it("tooltip should be shown on mouse over", function(){
                 //tooltips on desktop are shown on mouseover
-                if(Dash.isDesktop){
+                if (Dash.isDesktop) {
                     ST.play([
                         { type: "mouseover", target: "toolbar button[href=#searchresults]", x: 10, y: 10 }
                     ]);
-                }else{
+                } else {
                     //but you need to click to show tooltip on tablet
                     Dash.toolbarItem('searchresults')
                         .click();
@@ -186,25 +208,29 @@ describe("adminDashboard", function() {
                 ST.component('tooltip{isVisible()}')
                     .contentLike(/See latest search/);
             });
-            describe('navigate to pages using toolbar',function(){
+
+            describe('navigate to pages using toolbar',function () {
                 // these test cases aren't executed on mobile devices
-                if(Dash.isDesktop){
+                if (Dash.isDesktop) {
                     // just click toolbar item and if right view is loaded in app's main container
                     it("clicking on magnifier tool should navigate you to Search page", function(){
                         Dash.toolbarItem('searchresults')
                             .click();
                         Dash.searchView().visible();
                     });
+
                     it("clicking on email tool should navigate you to Email page", function(){
                         Dash.toolbarItem('email')
                             .click();
                         Dash.emailView().visible();
                     });
+
                     it("clicking on FAQ tool should navigate you to FAQ page", function(){
                         Dash.toolbarItem('faq')
                             .click();
                         ST.component('faq').visible();
                     });
+
                     it("clicking on profile tool should navigate you to FAQ page", function(){
                         Dash.toolbarItem('profile')
                             .click();

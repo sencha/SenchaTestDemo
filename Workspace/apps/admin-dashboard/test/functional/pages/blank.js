@@ -2,6 +2,7 @@ describe('Blank Page', function(){
     beforeAll(function () {
         Admin.app.redirectTo("#pageblank");
     });
+
     // if page is rendered properly
     it('is loaded', function(){
        ST.component('pageblank')
@@ -11,6 +12,7 @@ describe('Blank Page', function(){
                expect(el.rendered).toBeTruthy();
            });
     });
+
     // comparing actual screen with expected screen
     it('make a screenshot', function (done) {
         ST.screenshot('pageblank', done);

@@ -16,15 +16,19 @@ describe('Page Dashboard', function() {
         tool: function (toolName) {
             return ST.component('panel[title=Network] tool[type=' + toolName + ']');
         },
+
         todoGrid : function(){
             return ST.grid('panel[title=TODO List] grid');
         },
+
         panel : function(panelName){
             return ST.component('panel[title='+panelName+']');
         },
+
         todoTextField: function(){
             return ST.textField('panel[title=TODO List] field');
         },
+
         //Scroll the main panel to ensure that target is visible
         //although Sencha Test scrolls the target into view automatically it sometimes needs a bit of help
         mainPanelScrollY: function(scroll){
@@ -33,15 +37,18 @@ describe('Page Dashboard', function() {
             });
         }
     };
+
     beforeEach(function(){
         Admin.app.redirectTo("#dashboard"); // make sure you are on dashboard homepage
     });
+
     describe('Page \'Dashboard\'', function(){
         it('should be loaded correctly', function(){
             Dash.panel('TODO List').visible();
             Dash.panel('Network').visible();
             Dash.panel('Services').visible();
         });
+
         //visually check whole page
         it('should take screenshot', function(done){
             //wait for components to be available and animations finished before taking screenshot
@@ -50,6 +57,7 @@ describe('Page Dashboard', function() {
             });
         }, 1000 * 20);
     });
+
     describe('Panel \'TODO List\'', function(){
         describe('Gridpanel', function(){
             it('should select multiple rows by clicking on checkboxes', function(){
@@ -78,6 +86,7 @@ describe('Page Dashboard', function() {
                     });
             });
         });
+
         describe('Textbox', function(){
             it('should write text in the field', function(){
                 Dash.todoTextField()
@@ -92,6 +101,7 @@ describe('Page Dashboard', function() {
             });
         });
     });
+
     describe('Panel \'Network\'', function(){
         // Network panel should have 2 action tools in header
         describe('Tool \'wrench\'', function(){
@@ -100,12 +110,14 @@ describe('Page Dashboard', function() {
                     .visible();  
             });
         });
+
         describe('Tool \'refresh\'', function(){
             it('should be visible', function(){
                 Dash.tool('refresh')
                     .visible();
             });
         });
+
         describe('Chartnetwork chart', function(){
             it('should animate after click on tool', function(){
                 var data1, data2, dataStore;
@@ -116,12 +128,14 @@ describe('Page Dashboard', function() {
                         dataStore = panel.getStore();
                         data1 = dataStore.getAt(0).data;
                     });
+
                 Dash.tool('refresh')
                     .click()
                     .wait(function () {
                         return dataStore.isLoaded(); // waiting for the store to load
                     })
                     .click();
+
                 ST.component('panel[title=Network] chartnetwork')
                     .and(function(panel){
                         data2 = panel.getStore().getAt(0).data;
@@ -132,6 +146,7 @@ describe('Page Dashboard', function() {
             });
         });
     });
+
     describe('Panel \'Services\'', function(){
         describe('Polar charts', function(){
             function checkInteraction(i){
@@ -145,7 +160,8 @@ describe('Page Dashboard', function() {
                     });
                 });
             }
-            for(var i = 0; i < 2; i++){
+
+            for(var i = 0; i < 2; i++) {
                 checkInteraction(i);
             }
         });

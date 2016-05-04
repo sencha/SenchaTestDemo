@@ -3,7 +3,7 @@ describe('Page search results', function() {
      * Futures enable tests to practice the DRY (Don’t Repeat Yourself) principle.
      * Instead of creating the future instance at the point of need,
      * consider the following alternative.
-     **/
+     */
     var Dash = {
         // Sencha Test provides multiple ways to locate an element from a text string
         // A locator solves the same problem as a CSS selector but is a super-set of CSS selector syntax.
@@ -20,31 +20,39 @@ describe('Page search results', function() {
         searchGridAll: function () {
             return ST.grid('gridpanel[title=All]');
         },
+
         searchGridUsRes: function(){
             return ST.grid('grid[title=User Results]');
         },
+
         // Another example of Component query using diffent property - title
         searchTabbarTab: function(title){
             return ST.component('tabbar tab[title=' + title + ']');
         },
+
         searchMessGrid: function(){
             return ST.grid('grid[title=Messages]');
         },
+
         // Scrolls app main container to desired Y offset
         mainPanelScrollY: function(scroll){
             return ST.component('container[id=main-view-detail-wrap]').and(function(panel){
                 panel.setScrollY(scroll);
             });
         },
+
         // This ComponentQuery locator return Ext.grid.Column instance identified by it's parent grid and column name
         columnHeader: function(name){
             return ST.component('grid[title=User Results] gridcolumn[text=' + name + ']');
         },
+
         isDesktop : ST.os.deviceType == "Desktop"
     };
+
     beforeEach(function(){
         Admin.app.redirectTo("#searchresults"); // make sure you are on search results page
     });
+
     describe('Tab \'All\'', function(){
         beforeAll(function(){
             //scroll to top and select the right tab
@@ -71,10 +79,12 @@ describe('Page search results', function() {
                         expect(grid.isHidden()).toBe(false);
                     });
             });
-            for(var i = 0; i < 10; i++) {
+
+            for (var i = 0; i < 10; i++) {
                 checkRowSelection(i);
             }
-            function checkRowSelection(i){
+
+            function checkRowSelection (i) {
                 it('row # '+i+' should be selected after click', function(){
                     var selRow,gridStore;
                     //click first ten rows of grid and check they are selected
@@ -97,7 +107,8 @@ describe('Page search results', function() {
             }
         });
     });
-    describe('Tab \'User Results\'', function(){
+
+    describe('Tab \'User Results\'', function () {
         beforeAll(function(){
             //scroll to top and select the right tab before each spec
             Dash.mainPanelScrollY(0);
@@ -105,6 +116,7 @@ describe('Page search results', function() {
                 .visible()
                 .click();
         });
+
         describe('Screenshot tab \'User Results\'', function(){
             //visually check whole page
             it('should take screenshot', function(done){
@@ -114,6 +126,7 @@ describe('Page search results', function() {
                 });
             }, 1000 * 30);
         });
+
         describe('Gridpanel', function() {
             it('should be visible', function () {
                 Dash.searchGridUsRes()
@@ -122,30 +135,37 @@ describe('Page search results', function() {
                         expect(grid.isHidden()).toBe(false);
                     });
             });
+
             //click each sortable header and check that corresponding column is sorted using sorter
             it('should sort after click on header', function(){
                 var store = Ext.ComponentQuery.query('grid[title=User Results]')[0].getStore();
                 var names = ['#', 'User', 'Name', 'Email', 'Date', 'Subscription', 'Actions'];
-                for(var i = 1; i < names.length; i++){
-                    if(Ext.ComponentQuery.query('grid[title=User Results] gridcolumn[text=' + names[i] + ']')[0].sortable){
+
+                for (var i = 1; i < names.length; i++) {
+                    if (Ext.ComponentQuery.query('grid[title=User Results] gridcolumn[text=' + names[i] + ']')[0].sortable) {
                         Dash.columnHeader(names[i]).visible().click();
+
                         Dash.searchGridUsRes()
                             .visible()
                             .and(function(){
                                 expect(store.getSorters().getAt(0).getDirection()).toBe('ASC');
                             });
+
                         Dash.columnHeader(names[i]).click();
+
                         Dash.searchGridUsRes().visible().and(function(){
                             expect(store.getSorters().getAt(0).getDirection()).toBe('DESC');
                         });
                     }
                 }
             });
+
             //select first ten rows, click them and make sure each row is selected
             describe('selecting grid rows', function(){
                 function clickRow(i){
                     it('Clicking row '+ i + ' selects row ' + i, function () {
                         var selRow;
+
                         Dash.searchGridUsRes()
                             .visible()
                             .rowAt(i)
@@ -163,12 +183,14 @@ describe('Page search results', function() {
                             });
                     });
                 }
-                for(var i = 0; i < 10; i++){
+
+                for (var i = 0; i < 10; i++) {
                     clickRow(i);
                 }
             });
         });
     });
+
     describe('Tab \'Messages\'', function(){
         beforeAll( function(){
             //scroll to the top and select the right tab
@@ -177,6 +199,7 @@ describe('Page search results', function() {
                 .rendered()
                 .click();
         });
+
         describe('Screenshot tab \'Messages\'', function(){
             //visually check whole page
             it('should take screenshot', function(done){
@@ -186,6 +209,7 @@ describe('Page search results', function() {
                 });
             }, 1000 * 30);
         });
+
         describe('Gridpanel', function(){
             it('should be visible', function(){
                 Dash.searchMessGrid()
@@ -194,6 +218,7 @@ describe('Page search results', function() {
                         expect(grid.isHidden()).toBe(false);
                     });
             });
+
             //select first ten rows, click them and make sure each row is selected
             describe('selecting grid rows', function(){
                 function clickRow(i){
@@ -215,15 +240,18 @@ describe('Page search results', function() {
                             });
                     });
                 }
-                for(var i = 0; i < 10; i++){
+
+                for (var i = 0; i < 10; i++) {
                     clickRow(i);
                 }
             });
+
             //select a cell in grid and navigate right using keyboard events, then check focus changed
             //disabled on tablets, there is no need to test keyboard navigation on keyboardless devices
-            if(Dash.isDesktop){
+            if (Dash.isDesktop) {
                 it('should navigate right using keyboard', function(){
                     var prevCell;
+
                     Dash.searchMessGrid()
                         .viewReady()
                         .rowAt(1) //get second row
@@ -242,6 +270,7 @@ describe('Page search results', function() {
                             ]);
                         }).focused();
                 });
+
                 //select a cell in grid and navigate left using keyboard events, then check focus changed
                 it('should navigate left using keyboard', function(){
                     var prevCell;

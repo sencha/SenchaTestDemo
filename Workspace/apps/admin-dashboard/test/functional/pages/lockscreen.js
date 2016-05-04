@@ -2,6 +2,7 @@ describe('Lockscreen Page', function () {
     beforeEach(function () {
         Admin.app.redirectTo("#lockscreen");
     });
+
     // after each spec clean textfield
     afterEach(function () {
         Admin.app.redirectTo("#lockscreen");
@@ -10,6 +11,7 @@ describe('Lockscreen Page', function () {
                 el.setValue('');
             });
     });
+
     // if page is rendered properly
     it('is loaded', function () {
         ST.component('lockscreen')
@@ -18,10 +20,12 @@ describe('Lockscreen Page', function () {
                 expect(el.rendered).toBeTruthy();
             });
     });
+
     // comparing actual screen with expected screen
     it('make a screenshot', function (done) {
         ST.screenshot('lockscreen', done);
     }, 1000 * 20);
+
     //type and check textfield - textfield should contains typed value
     it('textfield is editable', function () {
         // we can locate element via couple of ways
@@ -45,6 +49,7 @@ describe('Lockscreen Page', function () {
                 expect(textfield.getValue()).toBe('GiveMeCookies');
             });
     });
+
     it('textfield show not be empty', function () {
         ST.textField('lockscreen textfield')
             .and(function (el) {
@@ -55,6 +60,7 @@ describe('Lockscreen Page', function () {
                 expect(el.isValid()).toBeTruthy();
             });
     });
+
     //type valid value to textfield and check button - button should be active
     it('button should react on valid texfield', function () {
         ST.textField('lockscreen textfield')
@@ -75,6 +81,7 @@ describe('Lockscreen Page', function () {
                 expect(button.isDisabled()).toBeTruthy();
             });
     });
+
     //type and check - button should be active and redirect to another page by clicking
     it('button should accept password and redirect to next page', function () {
         ST.textField('lockscreen textfield')
