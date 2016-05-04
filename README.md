@@ -12,6 +12,14 @@ a set of test runs copied from a Sencha Test Archive Server. See the
 [walkthrough](walkthrough/Workspace/Readme.md) for the story being told by the test
 runs for this project.
 
+The **Admin** application in this workspace has a complete Functional test suite as
+well as examples of Unit tests as well as Integration tests.
+
+## TestProject
+This is a stand-alone test workspace. There is no Sencha framework or even an application
+in this project. This type of project is common for Test Engineers or Test Automation
+Engineers because the application ("test subject") is most likely hosted on a QA server.
+
 ## AdminDashboard
 This is a single-application project using the Ext JS 6.0.1 application template. 
 It needs a copy of Ext JS 6.0.1 extracted into its `"ext"` directory before it can
