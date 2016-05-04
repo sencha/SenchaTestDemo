@@ -1,10 +1,10 @@
 describe('Todo Tests', function() {
-
     var taskName = 'Do this later';
 
     describe('with a not completed todo item', function() {
         beforeEach( function() {
             this.startTime = new Date().getTime();
+
             // Create a not completed item
             this.todo = new Admin.model.Todo({
                 id: 99,
@@ -131,13 +131,14 @@ describe('Todo Tests', function() {
     describe('with a completed todo item', function() {
         beforeEach( function() {
             this.startTime = new Date().getTime();
-            this.data = {
+
+            // Create a completed item
+            this.todo = new Admin.model.Todo({
                 id: 99,
                 task: 'Do this now',
                 done: true,
                 completedDate: new Date()
-            };
-            this.todo = new Admin.model.Todo(this.data);
+            });
         });
 
         describe('set fields by name', function() {
