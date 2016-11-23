@@ -55,10 +55,10 @@ describe('Widgets Page', function () {
                 });
         });
 
-        it('Screen comparison of Widgets page', function (done) {
+        it('Screen comparison of Widgets page', function () {
             // comparing actual screen with expected screen
-            ST.screenshot('widgetsPage', done);
-        }, 1000 * 20);
+            ST.screenshot('widgetsPage');
+        });
     });
 
     // test all text fields on register page, using for cycle makes much shorter your final code

@@ -8,7 +8,8 @@
             "coverageFilters": [],
             "directory": "unit",
             "name": "Unit",
-            "profile": "classic"
+            "profile": "classic",
+            "sandbox": false
         },
         {
             "libs": [],
@@ -16,13 +17,15 @@
             "directory": "functional",
             "name": "Functional Tests",
             "launch": true,
-            "profile": "classic"
+            "profile": "classic",
+            "sandbox": false
         },
         {
             "libs": [],
             "coverageFilters": [],
             "directory": "integration",
-            "name": "Integration"
+            "name": "Integration",
+            "sandbox": false
         }
     ],
     "globals": "Admin"

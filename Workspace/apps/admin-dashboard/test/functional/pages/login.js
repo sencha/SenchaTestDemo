@@ -46,10 +46,10 @@ describe('Login Page', function () {
                 });
         });
 
-        it('Screen comparison of Login page', function (done) {
+        it('Screen comparison of Login page', function () {
             // comparing actual screen with expected screen
-            ST.screenshot('loginPage', done);
-        }, 1000 * 20);
+            ST.screenshot('loginPage');
+        });
     });
 
     // user id textfield
@@ -112,28 +112,33 @@ describe('Login Page', function () {
     // remember me checkbox
     describe('Remember me checkbox', function () { 
         it('Remember me checkbox is checked', function () {
-           ST.checkBox('login checkboxfield')
+           ST.element('login checkboxfield => input')
            // using click method instead of check(), as it's closer to real user action
-           .click(0,15)
-           .checked()
-           .and(function (checkbox) {
-               // check if checkbox is really checked
-               expect(checkbox.checked).toBeTruthy();
-           });
+               .click();
+           ST.checkBox('login checkboxfield')
+               .checked()
+               .and(function (checkbox) {
+                   // check if checkbox is really checked
+                   expect(checkbox.checked).toBeTruthy();
+               });
         });
         
         it('Remember me checkbox is unchecked', function () {
             // select Remember me checkbox, as it is only one on the page, isn't 
             // necessary to specify location
             ST.checkBox('login checkboxfield')
-                .click(0,15)
+                .down('>> input')
+                .click();
+            ST.checkBox('login checkboxfield')
                 .checked()
-                .click(0,15)
+                .down('>> input')
+                .click();
+            ST.checkBox('login checkboxfield')
                 .unchecked()
                 .and(function (checkbox) {
                     // check if checkbox is really unchecked
                     expect(checkbox.unchecked).toBeFalsy();
-           });
+                });
         });
     });
 

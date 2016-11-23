@@ -34,10 +34,10 @@ describe("adminProfile", function() {
           .visible();
     });
 
-    it('Take a screenshot', function (done) {
+    it('Take a screenshot', function () {
         // comparing actual screen with expected screen.
-        ST.screenshot('adminProfile', done);
-    }, 1000 * 20);
+        ST.screenshot('adminProfile');
+    });
 
     it('TextArea is editable', function () {
         // Type string into textarea.

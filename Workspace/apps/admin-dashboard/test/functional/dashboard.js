@@ -50,12 +50,12 @@ describe('Page Dashboard', function() {
         });
 
         //visually check whole page
-        it('should take screenshot', function(done){
+        it('should take screenshot', function(){
             //wait for components to be available and animations finished before taking screenshot
             Dash.panel('Network').visible().rendered().and(function(){
-                ST.screenshot('dashboard', done);
+                ST.screenshot('dashboard');
             });
-        }, 1000 * 20);
+        });
     });
 
     describe('Panel \'TODO List\'', function(){
@@ -124,6 +124,9 @@ describe('Page Dashboard', function() {
                 //when animation is running the underlying data are changing 
                 //so we store data, start animation and compare the new data with the old ones
                 ST.component('panel[title=Network] chartnetwork')
+                    .wait(function(panel){
+                        return panel.getStore().hasOwnProperty('data');
+                    })
                     .and(function(panel){
                         dataStore = panel.getStore();
                         data1 = dataStore.getAt(0).data;

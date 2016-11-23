@@ -305,9 +305,9 @@ describe('Forms', function(){
     });
 
     // comparing actual screen with expected screen
-    it('make a screenshot', function(done){
-        ST.screenshot('form', done);
-    }, 1000 * 20);
+    it('make a screenshot', function(){
+        ST.screenshot('form');
+    });
 
     // call function and give a color of forms
     describe('Panel', function () {

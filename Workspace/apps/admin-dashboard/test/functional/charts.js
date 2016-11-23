@@ -41,11 +41,11 @@ describe("Checking charts", function() {
         Admin.app.redirectTo("#charts"); // make sure you are on dashboard homepage
     });
 
-    it('Take a screenshot', function (done) {
+    it('Take a screenshot', function () {
         // comparing actual screen with expected screen
         Dash.chartsPage().visible().rendered(); // make sure all charts are visible and laid out properly
-        ST.screenshot('adminCharts', done);
-    }, 1000 * 20);
+        ST.screenshot('adminCharts');
+    });
 
     it('Charts loaded correctly', function () {
         Dash.chartsAreaPanel()

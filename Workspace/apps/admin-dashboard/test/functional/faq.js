@@ -34,9 +34,9 @@ describe('FAQ', function () {
         Faq.panel('FAQs').visible();
     });
 
-    it('make a screenshot', function (done) {
-        ST.screenshot('faq', done); // take a screenshot
-    }, 1000 * 20);
+    it('make a screenshot', function () {
+        ST.screenshot('faq'); // take a screenshot
+    });
 
     it('check Useful tips panel', function () {
         //If width is below 1000 px side panels are not visible

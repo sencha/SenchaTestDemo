@@ -22,9 +22,9 @@ describe('Lockscreen Page', function () {
     });
 
     // comparing actual screen with expected screen
-    it('make a screenshot', function (done) {
-        ST.screenshot('lockscreen', done);
-    }, 1000 * 20);
+    it('make a screenshot', function () {
+        ST.screenshot('lockscreen');
+    });
 
     //type and check textfield - textfield should contains typed value
     it('textfield is editable', function () {

@@ -72,12 +72,12 @@ describe("adminDashboard", function() {
     });
 
     describe("Example loads correctly", function(){
-        it("Admin dashboard page screenshot should match baseline", function(done) {
+        it("Admin dashboard page screenshot should match baseline", function() {
             // Screenshots are only supported when running tests via CLI test runner
             Dash.treeList().visible().and(function(){
-                ST.screenshot('dash-navigation',done);
+                ST.screenshot('dash-navigation');
             });
-        }, 1000 * 20);
+        });
     });
 
     describe('App navigation', function(){

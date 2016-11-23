@@ -81,10 +81,10 @@ describe("email", function() {
     });
 
     describe("Example loads correctly", function(){
-        it("Email page screenshot should match baseline", function(done) {
+        it("Email page screenshot should match baseline", function() {
             // Screenshots are only supported when running tests via CLI test runner
-            ST.screenshot('email',done);
-        }, 1000 * 20);
+            ST.screenshot('email');
+        });
     });
 
     describe("Inbox panel", function(){
