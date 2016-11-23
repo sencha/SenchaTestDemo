@@ -54,21 +54,16 @@ describe('Page search results', function() {
     });
 
     describe('Tab \'All\'', function(){
-        beforeAll(function(){
-            //scroll to top and select the right tab
-            Dash.mainPanelScrollY(0);
-            Dash.searchTabbarTab('All')
-                .rendered()
-                .click();
-        });
+
         describe('Screenshot tab \'All\'', function(){
             //visually check whole page
-            it('should take screenshot', function(done){
+            it('should take screenshot', function(){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('All').visible().rendered().and(function(){
-                    ST.screenshot('tabAll', done);
-                });
-            }, 1000 * 30);
+                Dash.searchTabbarTab('All')
+                    .visible()
+                    .rendered();
+                ST.screenshot('tabAll');
+            });
         });
         
         describe('Gridpanel', function(){
@@ -94,14 +89,11 @@ describe('Page search results', function() {
                             .reveal() // scroll row into view
                             .click(100,10) // and click at x,y coordinates
                             .wait(function(row){
-                                return row.grid().cmp.getSelectionModel().isSelected(row.record);
+                                console.log(row);
+                                return row.el.dom.className.indexOf('x-grid-item-selected') > 0;
                             })
                             .and(function(row){
-                                selRow = row.record;
-                            })
-                            .grid() // return to Grid component
-                            .and(function(grid){
-                                expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
+                                expect(row.el.dom.className.indexOf('x-grid-item-selected') > 0).toBe(true);
                             });
                 });
             }
@@ -119,12 +111,13 @@ describe('Page search results', function() {
 
         describe('Screenshot tab \'User Results\'', function(){
             //visually check whole page
-            it('should take screenshot', function(done){
+            it('should take screenshot', function(){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('User Results').visible().rendered().and(function(){
-                    ST.screenshot('tabUserResults', done);
-                });
-            }, 1000 * 30);
+                Dash.searchTabbarTab('User Results')
+                    .visible()
+                    .rendered();
+                ST.screenshot('tabUserResults');
+            });
         });
 
         describe('Gridpanel', function() {
@@ -164,22 +157,17 @@ describe('Page search results', function() {
             describe('selecting grid rows', function(){
                 function clickRow(i){
                     it('Clicking row '+ i + ' selects row ' + i, function () {
-                        var selRow;
-
                         Dash.searchGridUsRes()
                             .visible()
                             .rowAt(i)
                             .reveal()
                             .click()
                             .wait(function(row){
-                                return row.grid().cmp.getSelectionModel().isSelected(row.record);
+                                console.log(row);
+                                return row.el.dom.className.indexOf('x-grid-item-selected') > 0;
                             })
                             .and(function(row){
-                                selRow = row.record;
-                            })
-                            .grid()
-                            .and(function(grid){
-                                expect(grid.getSelectionModel().isSelected(selRow)).toBe(true);
+                                expect(row.el.dom.className.indexOf('x-grid-item-selected') > 0).toBe(true);
                             });
                     });
                 }
@@ -202,12 +190,13 @@ describe('Page search results', function() {
 
         describe('Screenshot tab \'Messages\'', function(){
             //visually check whole page
-            it('should take screenshot', function(done){
+            it('should take screenshot', function(){
                 //wait for components to be available and animations finished before taking screenshot
-                Dash.searchTabbarTab('Messages').visible().rendered().and(function(){
-                    ST.screenshot('tabMessages', done);
-                });
-            }, 1000 * 30);
+                Dash.searchTabbarTab('Messages')
+                    .visible()
+                    .rendered();
+                ST.screenshot('tabMessages');
+            });
         });
 
         describe('Gridpanel', function(){
@@ -223,20 +212,20 @@ describe('Page search results', function() {
             describe('selecting grid rows', function(){
                 function clickRow(i){
                     it('Clicking row '+ i + ' selects row ' + i, function () {
-                        var selectedRow;
                         Dash.searchMessGrid()
                             .visible()
-                            .rowAt(i).and(function(row){
-                                selectedRow = row.record;
-                            })
+                            .rowAt(i)
                             .cellAt(1)
-                            .click()
-                            .wait(function(){
-                                return Ext.first("grid[title=Messages]").getSelectionModel().isSelected(selectedRow);
+                            .click();
+                        Dash.searchMessGrid()
+                            .visible()
+                            .rowAt(i)
+                            .wait(function(row){
+                                console.log(row);
+                                return row.el.dom.className.indexOf('x-grid-item-selected') > 0;
                             })
-                            .grid()
-                            .and(function(grid){
-                                expect(grid.getSelectionModel().isSelected(selectedRow)).toBe(true);
+                            .and(function(row){
+                                expect(row.el.dom.className.indexOf('x-grid-item-selected') > 0).toBe(true);
                             });
                     });
                 }

@@ -22,9 +22,9 @@ describe('PasswordReset Page', function () {
     });
 
     // comparing actual screen with expected screen
-    it('make a screenshot', function (done) {
-        ST.screenshot('passwordreset', done);
-    }, 1000 * 20);
+    it('make a screenshot', function () {
+        ST.screenshot('passwordreset');
+    });
 
     // type and check if value of textfiled is correct
     it('textfield is editable', function () {
