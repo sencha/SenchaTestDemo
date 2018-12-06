@@ -1,0 +1,86 @@
+{
+    "framework": "jasmine",
+    "libs": [
+        {
+            "disabled": false,
+            "path": "/test/libraryFunctions.js",
+            "type": "file"
+        }
+    ],
+    "coverageFilters": [],
+    "scenarios": [
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "classic/smoke/AdminDashboard",
+            "name": "Admin Dashboard - Classic",
+            "page": "admin-dashboard/frame-index.html",
+            "globals": "*",
+            "sandbox": false
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "modern/smoke/AdminDashboard",
+            "page": "admin-dashboard/frame-index.html?profile=modern",
+            "name": "Admin Dashboard - Modern",
+            "sandbox": false
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "sandbox": false,
+            "directory": "classic/regression/KitchenSink",
+            "name": "Kitchen Sink Regression - Classic",
+            "globals": "*",
+            "page": "kitchensink/frame-index.html"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "sandbox": false,
+            "directory": "modern/regression/KitchenSink",
+            "name": "Kitchen Sink Regression - Modern",
+            "globals": "*",
+            "page": "kitchensink/frame-index.html?profile=modern-triton#all"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "sandbox": false,
+            "globals": "*",
+            "directory": "modern/smoke/KitchenSink",
+            "page": "kitchensink/frame-index.html?profile=modern-triton#all",
+            "name": "Kitchen Sink Smoke - Modern"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "directory": "classic/regression/Calendar",
+            "name": "Ext JS Calendar - Classic",
+            "page": "calendar/frame-index.html?classic",
+            "globals": "*",
+            "sandbox": false
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "sandbox": false,
+            "directory": "modern/smoke/Calendar",
+            "name": "Ext JS Calendar - Modern",
+            "page": "calendar/frame-index.html?modern",
+            "globals": "*"
+        },
+        {
+            "libs": [],
+            "coverageFilters": [],
+            "sandbox": false,
+            "directory": "classic/regression/WebDesktop",
+            "name": "Ext JS Desktop - Classic",
+            "globals": "*",
+            "page": "classic/desktop/frame-index.html"
+        }
+    ],
+    "subjectUrl": "http://examples.sencha.com/extjs/6.6.0/examples/",
+    "pageObjects": []
+}
